@@ -37,3 +37,6 @@ spatial_crab_df <- st_as_sf(crab_df,
 st_crs(grid)
 st_crs(spatial_crab_df)
 
+## Challenge 2
+
+
