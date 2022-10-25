@@ -77,7 +77,8 @@ if (!file.exists(paste0(path, "prot_areas_and_ludwigia_3035.gpkg"))) {
 # `coordinateUncertaintyInMeters` of `spatial_ludwigia_df_3035`
 uncertainty <- spatial_ludwigia_df_3035$coordinateUncertaintyInMeters
 spatial_ludwigia_df_3035_buffer <- st_buffer(spatial_ludwigia_df_3035,
-                                             dist = uncertainty)
+                                             dist = uncertainty,
+                                             nQuadSegs = 30)
 
 
 # INTERMEZZO - S2 geometry
@@ -90,32 +91,31 @@ spatial_ludwigia_df_3035_buffer <- st_buffer(spatial_ludwigia_df_3035,
 
 # Using data in CRS 3035:
 # 1. Find which observations, as points, are _contained_ in each protected area?
-
-
+obs_prot <- st_contains(prot_areas_3035, spatial_ludwigia_df_3035)
 
 
 # You can use `st_intersects()` as well: same result. However, st_contains gives
 # more the idea of what you are doing
-
-
+st_intersects(prot_areas_3035, spatial_ludwigia_df_3035)
 
 
 # 2. But we should better check which observations, as circles (!), _intersect_
 # each protected area. How to do it?
-
-
-
+obs_intersect <- st_intersects(prot_areas_3035, spatial_ludwigia_df_3035_buffer)
 
 # 3. So, how many observations in the protected area called `"Demervallei"`?
-
+length(obs_intersect[[which(prot_areas_3035$NAAM == "Demervallei")]])
 
 # 4. Sometimes it's interesting to calculate the centroid of a polygon, e.g. for
 # visualizations. Easy by using sf function `st_centroids()`. However, you get
-# an error while calculating the centroids of `prot_areas`. What does it mean? How to solve the problem?
+# an error while calculating the centroids of `prot_areas`. What does it mean?
+# How to solve the problem?
+prot_areas %>% st_transform(31370) %>%
+  st_centroid() %>%
+  st_transform(projcrs)
 
-st_centroid(prot_areas)
-
-
+##> WGS84 (EPSG:4326) is a geometric CRS; for a centroid to work you need
+##> projected data
 
 
 ## BONUS CHALLENGE
