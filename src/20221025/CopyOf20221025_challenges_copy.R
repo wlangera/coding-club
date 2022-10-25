@@ -47,7 +47,6 @@ class(be_provinces_sf)
 be_provinces_sf$TX_PROV_DESCR_NL
 
 
-
 ## CHALLENGE 2
 
 # 1. Transform both `prot_areas` and `spatial_ludwigia_df` to [European
@@ -80,8 +79,6 @@ spatial_ludwigia_df_3035_buffer <- st_buffer(spatial_ludwigia_df_3035,
 #
 # Notice that since last version of sf you can apply such spatial operations in
 # spherical CRSs (aka systems using lat-lon like WGS84)
-
-
 
 
 ## CHALLENGE 3
