@@ -53,25 +53,27 @@ be_provinces_sf$TX_PROV_DESCR_NL
 # 1. Transform both `prot_areas` and `spatial_ludwigia_df` to [European
 # Terrestrial Reference System 1989](https://epsg.io/3035), the coordinate
 # reference system used at EU level
-
+prot_areas_3035 <- st_transform(prot_areas, 3035)
+spatial_ludwigia_df_3035 <- st_transform(spatial_ludwigia_df, 3035)
 
 
 # 2. Write the transformed data as a geopackage file called
 # `prot_areas_and_ludwigia_3035.gpkg` with two layers: the first called
 # `prot_areas`, containing the protected areas, the second layer,
 # `ludwigia_obs`, containing the observations of water primrose
-
-
-
-
+st_write(prot_areas_3035, paste0(path, "prot_areas_and_ludwigia_3035.gpkg"),
+         "prot_areas")
+st_write(spatial_ludwigia_df_3035, paste0(path, "prot_areas_and_ludwigia_3035.gpkg"),
+         "ludwigia_obs", append = TRUE)
 
 
 # 3. Due to spatial uncertainty (gridded data, GPS uncertainty, etc.) GBIF
 # observations should not be idealized as points in space, but as circles.
 # Create such circles using the values store in column
 # `coordinateUncertaintyInMeters` of `spatial_ludwigia_df_3035`
-
-
+uncertainty <- spatial_ludwigia_df_3035$coordinateUncertaintyInMeters
+spatial_ludwigia_df_3035_buffer <- st_buffer(spatial_ludwigia_df_3035,
+                                             dist = uncertainty)
 
 
 # INTERMEZZO - S2 geometry
