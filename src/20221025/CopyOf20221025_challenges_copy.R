@@ -44,7 +44,9 @@ be_provinces_sf <- st_as_sf(be_provinces_sp)
 class(be_provinces_sf)
 
 # 7. Extract the Flemish provinces.
-be_provinces_sf$TX_PROV_DESCR_NL
+fl_provinces <- be_provinces_sf %>% st_drop_geometry() %>%
+                  filter(TX_RGN_DESCR_NL == "Vlaams Gewest") %>%
+                  select(TX_PROV_DESCR_NL)
 
 
 ## CHALLENGE 2
@@ -60,11 +62,14 @@ spatial_ludwigia_df_3035 <- st_transform(spatial_ludwigia_df, 3035)
 # `prot_areas_and_ludwigia_3035.gpkg` with two layers: the first called
 # `prot_areas`, containing the protected areas, the second layer,
 # `ludwigia_obs`, containing the observations of water primrose
-st_write(prot_areas_3035, paste0(path, "prot_areas_and_ludwigia_3035.gpkg"),
-         "prot_areas")
-st_write(spatial_ludwigia_df_3035, paste0(path, "prot_areas_and_ludwigia_3035.gpkg"),
-         "ludwigia_obs", append = TRUE)
-
+if (!file.exists(paste0(path, "prot_areas_and_ludwigia_3035.gpkg"))) {
+  st_write(prot_areas_3035,
+           paste0(path, "prot_areas_and_ludwigia_3035.gpkg"),
+           "prot_areas")
+  st_write(spatial_ludwigia_df_3035,
+           paste0(path, "prot_areas_and_ludwigia_3035.gpkg"),
+           "ludwigia_obs", append = TRUE)
+}
 
 # 3. Due to spatial uncertainty (gridded data, GPS uncertainty, etc.) GBIF
 # observations should not be idealized as points in space, but as circles.
