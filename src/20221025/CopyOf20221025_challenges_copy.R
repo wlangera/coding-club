@@ -1,46 +1,50 @@
 library(tidyverse)
 library(sf)
 
-ludwigia_df <- read_tsv("./data/20221025/20221025_ludwigia_grandiflora.txt")
+path <- "./data/20221025/"
+ludwigia_df <- read_tsv(paste0(path, "20221025_ludwigia_grandiflora.txt"))
 
-# 1. Transform both `prot_areas` and `spatial_ludwigia_df` to [European
-# Terrestrial Reference System 1989](https://epsg.io/3035) (EPSG: 3035), the
-# coordinate reference system used at EU level
-
+# 1. Create a geospatial data.frame called spatial_ludwigia_df starting from
+# ludwigia_df. Note that GBIF data are stored using WGS 84. Hint: find first which
+# numeric code is associated with WGS84 coordinate reference system and use the
+# cheatsheet.
+projcrs <- 4326
+spatial_ludwigia_df <- st_as_sf(x = ludwigia_df,
+                                coords = c("decimalLongitude",
+                                           "decimalLatitude"),
+                                crs = projcrs)
 
 
 # 2. How many layers does the  geospatial file `20221025_protected_areas.gpkg`
 # contain?
-
+st_layers(paste0(path, "20221025_protected_areas.gpkg"))
 
 
 # 3. Import the layer `ps_hbtrl`: call it `prot_areas`
-
+prot_areas <- st_read(paste0(path, "20221025_protected_areas.gpkg"),
+                      layer = "ps_hbtrl")
 
 
 # 4. What is the CRS declared by user? Does it coincide with the real Geographic
 # Coordinate Reference System (GEOCRS)?
-
+st_crs(prot_areas)
 
 
 # 5. Do `prot_areas` and `spatial_ludwigia_df` have the same CRS?
-
+st_crs(prot_areas) == st_crs(spatial_ludwigia_df)
 
 
 # 6. Read the Belgian provinces rds file as `be_provinces_sp` (the code is
 # given!). What is the class of this variable? From which package? How to
 # transform it to a sf object?
+be_provinces_sp <- read_rds(file = paste0(path,"20221025_be_provinces_sp.rds"))
+class(be_provinces_sp)
 
-be_provinces_sp <- read_rds(
-  file = "./data/20221025/20221025_be_provinces_sp.rds"
-)
-
-
-
-
+be_provinces_sf <- st_as_sf(be_provinces_sp)
+class(be_provinces_sf)
 
 # 7. Extract the Flemish provinces.
-
+be_provinces_sf$TX_PROV_DESCR_NL
 
 
 
