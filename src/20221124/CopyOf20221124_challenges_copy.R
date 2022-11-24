@@ -68,7 +68,6 @@ names(tdiff_tmax_tmin) <- "tdiff_01"
 
 # 6. Save the one layer raster tdiff_tmax_tmin as a new GeoTIFF (*.tif) file:
 # 20221124_tdiff_tmax_tmin_01.tif
-
 writeRaster(tdiff_tmax_tmin,
             paste0(data_path, "20221124_tdiff_tmax_tmin_01.tif"))
 
@@ -92,6 +91,9 @@ plot(w)
 
 min_max_temp <- exactextractr::exact_extract(tdiff_tmax_tmin, w,
                                              c("min", "max"))
+
+
+
 
 ## BONUS CHALLENGE 1
 
