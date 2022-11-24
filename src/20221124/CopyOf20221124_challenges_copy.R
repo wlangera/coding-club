@@ -79,6 +79,7 @@ writeRaster(tdiff_tmax_tmin,
             paste0(data_path, "20221124_tdiff_tmax_tmin_01.tif"),
             overwrite = TRUE)
 
+
 # 9. After loading country boundaries as polygons (code provided!), calculate
 # the minimum and maximum values of all layers in tdiff_tmax_tmin for each
 # country. The output is a data.frame. Tip: use exactextractr::exact_extract()
@@ -91,6 +92,18 @@ plot(w)
 
 min_max_temp <- exactextractr::exact_extract(tdiff_tmax_tmin, w,
                                              c("min", "max"))
+
+## CHALLENGE 3
+# Load the average solar radiation tif file wc2.1_5m_srad_01.tif as srad.
+
+# We want to calculate the spatial correlation between average solar radiation
+# and average maximum temperature of January. We can do it by using
+# terra::focalCor(). However, we get the error below. Why? Try to solve this.
+
+
+# The error disappears, you are happy but the computation takes a lot of time,
+# isn't? Downsample the rasters by factor 5. Rerun the correlation and plot it.
+# Plot also the histogram of the correlation values.
 
 
 
