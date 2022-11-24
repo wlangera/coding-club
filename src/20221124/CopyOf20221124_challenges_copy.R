@@ -102,13 +102,27 @@ plot(srad)
 # We want to calculate the spatial correlation between average solar radiation
 # and average maximum temperature of January. We can do it by using
 # terra::focalCor(). However, we get the error below. Why? Try to solve this.
-terra::focalCor()
+focalCor(c(srad, tmin_max$tmax_01), w = 3, function(x, y) cor(x, y))
+
+tmin_max$tmax_01
+srad
+##> resolution is different
 
 # The error disappears, you are happy but the computation takes a lot of time,
 # isn't? Downsample the rasters by factor 5. Rerun the correlation and plot it.
 # Plot also the histogram of the correlation values.
+srad_down <- terra::aggregate(srad, fact = 2)
 
+#if you don't know the factor use resample
+srad_down <- terra:resample(x = srad, y = tmin_max)
 
+srad_lowres <- terra::aggregate(srad_down, fact = 5)
+tmin_max_lowres <- terra::aggregate(tmin_max, fact = 5)
+
+corrs <- focalCor(c(srad_lowres, tmin_max_lowres$tmax_01), w = 3,
+         function(x, y) cor(x, y))
+
+plot(corrs)
 
 
 ## BONUS CHALLENGE 1
