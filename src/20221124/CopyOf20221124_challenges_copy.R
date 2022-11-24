@@ -91,7 +91,7 @@ w
 plot(w)
 
 min_max_temp <- exactextractr::exact_extract(tdiff_tmax_tmin, w,
-                                             c("minority", "majority"))
+                                             c("min", "max"))
 
 ## BONUS CHALLENGE 1
 
