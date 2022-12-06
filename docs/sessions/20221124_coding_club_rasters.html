@@ -198,7 +198,7 @@ class: left, top
 
 # Challenge 2
 
-1. Read the `20221124_tdiff_tmax_tmin_01.tif` as `tmin_max`
+1. Read the `20221124_wc2.1_10m_tmin_tmax_01.tif` as `tmin_max`
 2. How many layers does it contain? What are their names? What is the CRS? The extent? The resolution?
 3. Rename the layers: `wc2.1_10m_tmin_01` to `tmin_01`, `wc2.1_10m_tmax_01` to `tmax_01`.
 4. Plot the raster
@@ -243,7 +243,7 @@ class: left, top
 
 # Challenge 3
 
-Load the average solar radiation tif file `wc2.1_5m_srad_01.tif` as  `srad`.
+Load the average solar radiation tif file `20221124_wc2.1_5m_srad_01.tif` as  `srad`.
 
 We want to calculate the spatial correlation between average solar radiation and average maximum temperature of January. We can do it by using `terra::focalCor()`.
 However, we get the error below. Why? Try to solve this.
@@ -285,7 +285,8 @@ class: left, top
 
 # Resources
 
-- solutions and video recording will be soon available
+- [solutions](https://github.com/inbo/coding-club/blob/master/src/20221124/20221124_challenges_solutions.R) are available online
+- [video recording](https://vimeo.com/775952986) available on viemo's INBO coding club channel of INBO
 - [Spatial Data Science with R and `terra`](https://rspatial.org/terra/index.html): THE place to be to learn a lot about rasters and spatial data
 - great [workshop](https://nowosad.github.io/SIGR2021/workshop2/workshop2.html#1) with a lot of examples, exercises and references. Author: Jakub Nowosad
 - [tutorial](https://www.neonscience.org/resources/learning-hub/tutorials/dc-raster-calculations-r) about raster calculations in R with step by step examples
@@ -305,9 +306,3 @@ class: center, top
 Topic: maps in R <br>
 Room:  HT - 01.20 - Willy Van Der Meeren <br>
 Date: **06/12/2022**, van **10:00** tot **12:30**
-
-
-Topic: maps in R
-Room: 01.20 - Willy Van Der Meeren <br>
-Date: **6/12/2022**, van **10:00** tot **12:30** <br>
-(registration announced via DG_useR@inbo.be)
