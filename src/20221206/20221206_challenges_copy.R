@@ -50,6 +50,16 @@ legend_land_use <- tibble( # a tibble is a "nicely printed" data.frame
 )
 legend_land_use
 
+# 1.
+ggplot(natura2000) +
+  geom_sf(aes(fill = Shape_area)) +
+  scale_fill_continuous(type = "viridis") +
+  labs(title = "Natura2000 areas")
+
+# 2.
+nitrogen %>%
+  terra::plot(range = c(10, 47),
+              col = hcl.colors(n = 100, palette = "Blue-Red 3"))
 
 ## CHALLENGE 2 - static maps
 
