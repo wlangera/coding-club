@@ -10,10 +10,10 @@ library(geodata)
 
 
 
-# 4. Read `20211125_lu_nara_legend.csv` (code is provided!) so that you can set
+# 4. Read `20221124_lu_nara_legend.txt` (code is provided!) so that you can set
 # the color table associated with `lu_nara_2016`.
 legend <- read_csv(
-  "./data/20211125/20211125_lu_nara_legend.csv",
+  "./data/20221124/20221124_lu_nara_legend.txt",
   col_types = cols(
     id = col_double(),
     land_use = col_character(),
@@ -26,7 +26,7 @@ legend
 #' 5. Calculate the most and least occurring land use category in each of the
 #' Natura2000 protected areas (read these areas using the provided code). Tip: use exactextractr::exact_extract() and find
 #' the right [summary operations](https://isciences.gitlab.io/exactextractr/#summary-operations)
-natura2000 <- st_read("./data/20211125/20211125_protected_areas_Lambert72.gpkg",
+natura2000 <- sf::st_read("./data/20221124/20221124_protected_areas_Lambert72.gpkg",
                       layer = "ps_hbtrl")
 
 
