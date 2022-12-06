@@ -61,6 +61,11 @@ nitrogen %>%
   terra::plot(range = c(10, 47),
               col = hcl.colors(n = 100, palette = "Blue-Red 3"))
 
+# 3.
+plot(lu_nara_2016, type = "classes", col = legend_land_use$color,
+     levels = legend_land_use$land_use, main = "Land use in Flanders")
+
+
 ## CHALLENGE 2 - static maps
 
 
