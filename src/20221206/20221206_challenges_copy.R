@@ -120,7 +120,7 @@ occs_in_areas <- st_contains(natura2000, occs_hogweed)
 natura2000$n_occs <- purrr::map_dbl(occs_in_areas, function(x) length(x))
 
 # 1.
-mapview(natura2000, map.types	= "OpenStreetMap", color = "red", zcol = "n_occs")
+mapview(natura2000, color = "red", zcol = "n_occs")
 
 # 2.
 mapview(natura2000, map.types	= "OpenStreetMap", color = "red", zcol = "n_occs",
