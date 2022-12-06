@@ -72,9 +72,9 @@ plot(lu_nara_2016, type = "classes", col = legend_land_use$color,
 natura2000_osm <- get_tiles(natura2000, crop = TRUE, zoom = 9)
 
 # display map
-plot_tiles(natura2000_osm)
+plot_tiles(natura2000_osm, main = "Natura2000 gebieden", line = -2)
 
-# add Norh Carolina counties
+# add natura2000 areas
 plot(st_geometry(natura2000), col = "cornflowerblue", add = TRUE)
 
 # Add credits
@@ -83,7 +83,24 @@ mtext(text = get_credit("OpenStreetMap"),
       font = 3)
 
 # 2.
+# Get tiles
+natura2000_osm2 <- get_tiles(natura2000, crop = TRUE, zoom = 9,
+                             provider = "Esri.NatGeoWorldMap")
 
+# Display map
+plot_tiles(natura2000_osm2, main = "Natura2000 gebieden", line = -2)
+
+# Create colour palette
+my.palette <- rgb(natura2000$Shape_area,
+                  max(natura2000$Shape_area) - natura2000$Shape_area,
+                  0, maxColorValue = max(natura2000$Shape_area))
+
+# add natura2000 areas
+plot(st_geometry(natura2000), col = my.palette, add = TRUE)
+
+# Add credits
+mtext(text = get_credit("Esri.NatGeoWorldMap"),
+      side = 1, line = -1, adj = 1, cex = .7, font = 3)
 
 
 ## CHALLENGE 3 - dynamic maps
