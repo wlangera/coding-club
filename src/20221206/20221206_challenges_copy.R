@@ -67,7 +67,19 @@ plot(lu_nara_2016, type = "classes", col = legend_land_use$color,
 
 
 ## CHALLENGE 2 - static maps
+# Get tiles
+natura2000_osm <- get_tiles(natura2000, crop = TRUE)
 
+# display map
+plot_tiles(natura2000_osm)
+
+# add Norh Carolina counties
+plot(st_geometry(natura2000), col = "cornflowerblue", add = TRUE)
+
+# Add credits
+mtext(text = get_credit("OpenStreetMap"),
+      side = 1, line = -1, adj = 1, cex = .9,
+      font = 3)
 
 
 
