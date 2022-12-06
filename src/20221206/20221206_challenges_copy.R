@@ -131,5 +131,5 @@ img <- "https://raw.githubusercontent.com/inbo/coding-club/master/docs/assets/im
 
 mapview(natura2000, map.types	= "OpenStreetMap", color = "red", zcol = "n_occs",
         alpha.regions = 0.9, alpha = 0.2, layer.name = "n obs") %>%
-addLogo(img)
+addLogo(img, url = "https://inbo.github.io/coding-club/")
 
