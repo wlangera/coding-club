@@ -119,11 +119,17 @@ occs_in_areas <- st_contains(natura2000, occs_hogweed)
 # get number of points in each polygon as a vector
 natura2000$n_occs <- purrr::map_dbl(occs_in_areas, function(x) length(x))
 
+# 1.
+mapview(natura2000, map.types	= "OpenStreetMap", color = "red", zcol = "n_occs")
 
+# 2.
+mapview(natura2000, map.types	= "OpenStreetMap", color = "red", zcol = "n_occs",
+        alpha.regions = 0.9, alpha = 0.2, layer.name = "n obs")
 
 # 3. link to image
-
 img <- "https://raw.githubusercontent.com/inbo/coding-club/master/docs/assets/images/coding_club_logo.svg"
 
-
+mapview(natura2000, map.types	= "OpenStreetMap", color = "red", zcol = "n_occs",
+        alpha.regions = 0.9, alpha = 0.2, layer.name = "n obs") %>%
+addLogo(img)
 
