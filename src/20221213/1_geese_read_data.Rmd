@@ -22,7 +22,7 @@ title : "Read and preprocess geese data"
 
 Load libraries:
 
-```{r}
+```{r, message = FALSE}
 library(tidyverse)    # to do datascience
 library(geepack)      # to do modelling
 library(INBOtheme)    # to apply INBO style to graphs
@@ -44,7 +44,7 @@ In this document we will:
 Read catches and counts of geese in Flanders:
 
 ```{r}
-catch_fl <- read_csv("./data/20221213/20221213_geese_counts.txt",
+catch_fl <- read_csv(here::here("data/20221213/20221213_geese_counts.txt"),
                      na = "NA",
                      col_types = cols(
                        province = col_character(),
