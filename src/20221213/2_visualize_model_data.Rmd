@@ -43,7 +43,8 @@ library(htmltools)    # to make nice html labels for dynamic maps
 Read catches and counts of geese in Flanders:
 
 ```{r}
-catch_fl <- read.csv(here::here("data/20221213/20221213_geese_counts_processed.txt"))
+catch_fl <- read.csv(
+  here::here("data/20221213/20221213_geese_counts_processed.txt"))
 ```
 
 ## Static plots {.tabset .tabset-fade .tabset-pills}
