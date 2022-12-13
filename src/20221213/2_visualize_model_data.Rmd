@@ -20,8 +20,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # CHALLENGE 2
 
-Title: Data visualization  
-  
+Title: Data visualization
+
 In this section we will show how number of catches varies by year, province and species. Both static plots and dynamic maps are generated.
 
 ## Setup
@@ -37,7 +37,6 @@ library(leaflet)      # to make dynamic maps
 library(htmltools)    # to make nice html labels for dynamic maps
 ```
 
-
 ## Read data
 
 Read catches and counts of geese in Flanders:
@@ -50,7 +49,6 @@ catch_fl <- read.csv(
 ## Static plots {.tabset .tabset-fade .tabset-pills}
 
 Show catches (make a tabbed section out of it)
-
 
 ### per province (1st tab)
 
@@ -66,7 +64,6 @@ ggplot(catch_per_province, aes(x = province, y = catched_total)) +
   scale_x_discrete(breaks = 2009:2018)
 ```
 
-
 ### per year (2nd tab)
 
 ```{r}
@@ -80,7 +77,6 @@ ggplot(catch_per_year, aes(x = year, y = catched_total)) +
   geom_bar(stat = 'identity') +
   scale_x_continuous(breaks = 2009:2018)
 ```
-
 
 ### per year and province (3rd tab)
 
@@ -96,7 +92,6 @@ ggplot(catch_per_year_province, aes(x = year, y = catched, fill = province)) +
   geom_bar(stat = 'identity') +
   scale_x_continuous(breaks = 2009:2018)
 ```
-
 
 ## Catch analysis at species level
 
@@ -114,7 +109,6 @@ species <- c(
 )
 ```
 
-
 ### Catches per year and species
 
 ```{r}
@@ -129,7 +123,6 @@ ggplot(catch_species, aes(x = year, y = catched_total, fill = commonName)) +
   geom_bar(stat = 'identity') +
   scale_x_continuous(breaks = 2009:2018)
 ```
-  
 
 ### Data modelling
 
@@ -184,10 +177,9 @@ ggplot(overview_gee, aes(x = year, y = Estimate, ymin = lwr, ymax = upr)) +
   labs(title = "All provinces")
 ```
 
-
 ## Dynamic maps
 
-We make dynamic _leaflet_ maps of total number of catches per province.
+We make dynamic *leaflet* maps of total number of catches per province.
 
 ```{r, class.source = 'fold-hide'}
 pr_fl <- st_read(here::here("data/20221213/20221213_flemish_provinces.gpkg"))
@@ -227,6 +219,3 @@ map_catch_pr <- leaflet(pr_fl) %>%
 
 map_catch_pr
 ```
-
-
-
