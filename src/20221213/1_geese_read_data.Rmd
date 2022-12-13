@@ -1,0 +1,136 @@
+---
+title: "Read and preprocess geese data"
+author: "Ward Langeraert"
+date: "2022-12-13"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# CHALLENGE 1
+
+Convert the code below to a Rmd document called `1_geese_read_data.Rmd` and make an html version of it.  
+  
+title : "Read and preprocess geese data"
+
+
+## Setup
+
+Load libraries:
+
+```{r}
+library(tidyverse)    # to do datascience
+library(geepack)      # to do modelling
+library(INBOtheme)    # to apply INBO style to graphs
+library(sf)           # to work with geospatial vector data
+library(leaflet)      # to make dynamic maps
+library(htmltools)    # to make nice html labels for dynamic maps
+```
+
+## Introduction
+
+In this document we will:
+
+1. read geese data
+2. explore data
+3. preprocess data
+
+## Read data
+
+Read catches and counts of geese in Flanders:
+
+```{r}
+catch_fl <- read_csv("./data/20221213/20221213_geese_counts.txt",
+                     na = "NA",
+                     col_types = cols(
+                       province = col_character(),
+                       location = col_character(),
+                       year = col_double(),
+                       latinName = col_character(),
+                       commonName = col_character(),
+                       counts = col_double(),
+                       catched = col_double(),
+                       adult = col_double(),
+                       pulli = col_double(),
+                       not_catched = col_double()
+                     ))
+```
+
+
+Number of catch data:
+
+```{r}
+nrow(catch_fl)
+```
+
+Preview:
+
+```{r}
+head(catch_fl, n = 30)
+```
+
+
+## Explore data
+
+### Taxonomic information
+
+Species present:
+
+```{r}
+catch_fl %>% distinct(latinName, commonName)
+```
+
+
+### Geographic information
+
+Data are geographically grouped by province and municipality (`location`):
+
+```{r}
+catch_fl %>% distinct(province, location)
+```
+
+
+
+### Temporal information
+
+The data are temporally defined at year level:
+
+```{r}
+years <- catch_fl %>% distinct(year) %>% pull()
+```
+
+from:
+
+```{r}
+min(years)
+```
+
+to:
+
+```{r}
+max(years)
+```
+
+
+## Preprocess data
+
+Data not linked to any `province` or `location` (`NAs`) will be removed.  
+  
+Number of rows removed:
+
+```{r}
+catch_fl %>%
+  filter(is.na(province) | is.na(location)) %>%
+  nrow
+```
+
+Final dataset:
+
+```{r}
+catch_fl <- catch_fl %>% filter(!is.na(province) & !is.na(location))
+catch_fl
+```
