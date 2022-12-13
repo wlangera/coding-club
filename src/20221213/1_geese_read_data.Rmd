@@ -139,3 +139,12 @@ Final dataset:
 catch_fl <- catch_fl %>% filter(!is.na(province) & !is.na(location))
 catch_fl
 ```
+
+
+## Write out dataset
+
+```{r}
+write.csv(catch_fl, 
+          here::here("data/20221213/20221213_geese_counts_processed.txt"))
+```
+
