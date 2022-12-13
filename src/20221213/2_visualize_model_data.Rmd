@@ -2,7 +2,14 @@
 title: "Data visualization"
 author: "Ward Langeraert"
 date: "2022-12-13"
-output: html_document
+output: 
+  html_document:
+    df_print: paged
+    toc: true
+    toc_float:
+      collapsed: FALSE
+    number_sections: true
+    code_folding: show
 editor_options: 
   chunk_output_type: console
 ---
@@ -127,7 +134,7 @@ ggplot(catch_species, aes(x = year, y = catched_total, fill = commonName)) +
 
 We apply a GEE (generalized estimating equations) model to data from 2010.
 
-```{r}
+```{r, class.source = 'fold-hide'}
 model_per_species <-
   map(
     species,
@@ -181,7 +188,7 @@ ggplot(overview_gee, aes(x = year, y = Estimate, ymin = lwr, ymax = upr)) +
 
 We make dynamic _leaflet_ maps of total number of catches per province.
 
-```{r}
+```{r, class.source = 'fold-hide'}
 pr_fl <- st_read(here::here("data/20221213/20221213_flemish_provinces.gpkg"))
 pr_fl <- pr_fl %>%
   dplyr::left_join(catch_per_province,
