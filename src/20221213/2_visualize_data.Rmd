@@ -1,108 +1,62 @@
-## CHALLENGE 1
+---
+title: "Data visualization"
+author: 
+- "Damiano Oldoni"
+- "you"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    number_sections: true
+    df_print: paged
+    code_folding: hide
+---
 
-# Convert the code below to a Rmd document called `1_geese_read_data.Rmd` and
-# make an html version of it
+# Setup 
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      tidy = 'styler' # see intermezzo 1
+)
+```
 
-# title : "Read and preprocess geese data"
-#
-# # Setup
+Load packages:
 
-# Load libraries:
+```{r load-pkgs, message=FALSE, warning=FALSE}
 library(tidyverse)    # to do datascience
 library(geepack)      # to do modelling
 library(INBOtheme)    # to apply INBO style to graphs
 library(sf)           # to work with geospatial vector data
 library(leaflet)      # to make dynamic maps
 library(htmltools)    # to make nice html labels for dynamic maps
+library(here)         # to work with paths
+```
 
-# # Introduction
-#
-# In this document we will:
-#
-# 1. read geese data
-# 2. explore data
-# 3. preprocess data
-#
-#
-#
-# # Read data
-#
-# Read catches and counts of geese in Flanders:
-catch_fl <- read_csv("./data/20221213/20221213_geese_counts.txt",
-                     na = "NA",
-                     col_types = cols(
-                       province = col_character(),
-                       location = col_character(),
-                       year = col_double(),
-                       latinName = col_character(),
-                       commonName = col_character(),
-                       counts = col_double(),
-                       catched = col_double(),
-                       adult = col_double(),
-                       pulli = col_double(),
-                       not_catched = col_double()
-                     ))
+Notice we have to "reload" tidyverse: the knitting process of a RMarkdown is an universe (_environment_) apart!
 
-# Number of catch data:
-nrow(catch_fl)
+Same holds true for `catch_fl`, the cleaned data as output of challenge 1. Again, notice that it is present in your _local_ environment, but won't be  during the knitting process.
 
-# Preview:
-head(catch_fl, n = 30)
+Read `catch_fl` containing the cleaned geese catch data:
 
-# # Explore data
+```{r read-cleaned-data}
+path_catch_file <- here("data", "20221213", "20221213_geese_counts_cleaned.txt")
+catch_fl <- read_csv(path_catch_file, na = "") 
+```
 
-# ## Taxonomic information
-#
-# Species present:
-catch_fl %>% distinct(latinName, commonName)
+# Introduction
 
-# ## Geographic information
-#
-# Data are geographically grouped by province and municipality (`location`):
-#
-catch_fl %>% distinct(province, location)
+In this section we will show how number of catches varies by year, province and species. 
+Both static plots and dynamic maps are generated.
 
-# ## Temporal information
-#
-# The data are temporally defined at year level:
-#
-years <- catch_fl %>% distinct(year) %>% pull()
+# Static plots
 
-# from:
-min(years)
+## Show catches  {.tabset .tabset-fade .tabset-pills}
 
-# to:
-max(years)
+### per province
 
-# ## Preprocess data
-#
-# Data not linked to any `province` or `location` (`NAs`) will be removed.
-#
-# Number of rows removed:
-catch_fl %>%
-  filter(is.na(province) | is.na(location)) %>%
-  nrow
-
-
-# Final dataset:
-catch_fl <- catch_fl %>% filter(!is.na(province) & !is.na(location))
-catch_fl
-
-
-## CHALLENGE 2
-
-# Title: Data visualization
-
-# In this section we will show how number of catches varies by year, province
-# and species. Both static plots and dynamic maps are generated.
-#
-# # Static plots
-#
-# ## Show catches (make a tabbed section out of it)
-# 
-# ### per province (1st tab)
-
+```{r echo=FALSE}
 catch_per_province <- catch_fl %>%
   group_by(province) %>%
   summarize(catched_total = sum(catched, na.rm = TRUE)) %>%
@@ -112,9 +66,11 @@ ggplot(catch_per_province,
        aes(x = province, y = catched_total)) +
   geom_bar(stat = 'identity') +
   scale_x_discrete(breaks = 2009:2018)
+```
 
-# ### per year (2nd tab)
+### per year
 
+```{r catch-per-year}
 catch_per_year <- catch_fl %>%
   group_by(year) %>%
   summarize(catched_total = sum(catched, na.rm = TRUE)) %>%
@@ -124,9 +80,11 @@ ggplot(catch_per_year,
        aes(x = year, y = catched_total)) +
   geom_bar(stat = 'identity') +
   scale_x_continuous(breaks = 2009:2018)
+```
 
-# ### per year and province (3rd tab)
+### per year and province
 
+```{r catch-year-pr}
 catch_per_year_province <-
   catch_fl %>%
   group_by(year, province) %>%
@@ -137,13 +95,15 @@ ggplot(catch_per_year_province,
        aes(x = year, y = catched, fill = province)) +
   geom_bar(stat = 'identity') +
   scale_x_continuous(breaks = 2009:2018)
+```
 
-# ## Catch analysis at species level
-#
-# ### Species selection
-#
-# Before we proceed to analyse the catches at species level, specify the species we are interested to by `commonName`:
-# SHOW THIS CHUNK CODE!
+## Catch analysis at species level
+
+### Species selection
+
+Before we proceed to analyse the catches at species level, specify the species we are interested to by `commonName`:
+
+```{r species, class.source = "fold-show"}
 species <- c(
   "Brandgans",
   "Canadese gans",
@@ -151,9 +111,11 @@ species <- c(
   "Soepgans",
   "Nijlgans"
 )
+```
 
-# ### Catches per year and species
+### Catches per per year and species
 
+```{r catch-species}
 catch_species <-
   catch_fl %>%
   filter(commonName %in% species) %>%
@@ -164,12 +126,13 @@ ggplot(catch_species,
        aes(x = year, y = catched_total, fill = commonName)) +
   geom_bar(stat = 'identity') +
   scale_x_continuous(breaks = 2009:2018)
+```
 
-# ### Data modelling
-#
-# We apply a GEE (generalized estimating equations) model to data from 2010.
+### Data modelling
 
+We apply a GEE (generalized estimating equations) model to data from 2010.
 
+```{r apply-gee-model}
 model_per_species <-
   map(
     species,
@@ -195,7 +158,9 @@ overview_gee <- map2_dfr(
       as_tibble() %>%
       mutate(species = name,
              year = str_sub(year, start = 5)) %>%
-      dplyr::select(species, everything())
+      # added dplyr:: as select() exists in sf package as well.
+      # Some people could get an error at this line otherwise.
+      dplyr::select(species, everything()) 
   })
 overview_gee <-
   overview_gee %>%
@@ -204,7 +169,8 @@ overview_gee <-
     upr = exp(Estimate + Std.err),
     Estimate = exp(Estimate)
 )
-ggplot(overview_gee, aes(x = year, y = Estimate, ymin = lwr, ymax = upr)) +
+ggplot(overview_gee,
+       aes(x = year, y = Estimate, ymin = lwr, ymax = upr)) +
   geom_errorbar(colour = "cyan3") + geom_point(colour = "cyan4") +
   facet_grid(.~species) +
   xlab("year") + ylab("Estimated number of geese per location") +
@@ -212,13 +178,20 @@ ggplot(overview_gee, aes(x = year, y = Estimate, ymin = lwr, ymax = upr)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, size = 9)) +
   labs(title = "All provinces")
 
+```
 
+# Dynamic maps
 
-# # Dynamic maps
-#
-# We make dynamic _leaflet_ maps of total number of catches per province.
-#
+We make dynamic _leaflet_ maps of total number of catches per province.
+
+We read the polygons without showing the code (chunk option: `include=FALSE`).
+
+```{r read_plygons, include=FALSE}
 pr_fl <- st_read("./data/20221213/20221213_flemish_provinces.gpkg")
+```
+
+
+```{r leaflet-maps}
 pr_fl <- pr_fl %>%
   dplyr::left_join(catch_per_province,
                    by = c("TX_PROV_DESCR_NL" = "province"))
@@ -251,6 +224,4 @@ map_catch_pr <- leaflet(pr_fl) %>%
       textsize = "15px",
       direction = "auto"))
 map_catch_pr
-
-
-
+```
