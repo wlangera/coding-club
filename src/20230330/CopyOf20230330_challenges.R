@@ -108,8 +108,7 @@ ias_path %>%
     "-",
     as.character(.data$bins_first_observed_label + bin - 1)
   )) %>%
-  group_by(pathway, bins_first_observed_label) %>%
-  mutate(n = n()) %>%
+  count(pathway, bins_first_observed_label) %>%
   ggplot(aes(x = bins_first_observed_label, y = n, colour = pathway)) +
     geom_point(shape = 1, size = 3) +
     geom_line(aes(group = pathway)) +
