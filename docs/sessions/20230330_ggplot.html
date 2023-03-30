@@ -1,0 +1,322 @@
+---
+layout: presentation
+title: Great plots with ggplot
+---
+
+class: center, middle
+
+![:scale 30%]({{ site.baseurl}}/assets/images/coding_club_logo_1.png)
+
+<!-- Do not forget to adapt the presentation title in the header! -->
+
+<!-- Adjust the presentation to the session. Focus on the challenges,
+    this is not a coding tutorial.
+
+    Note, to include figures, store the image in the `/docs/assets/images/yyyymmdd/`
+    folder and use the jekyll base.url reference as done in this template
+    or see https://jekyllrb.com/docs/liquid/tags/#links.
+    using the scale attribute ![:scale 30%](...), you can adjust the image size.
+-->
+
+<!--  Adjust the day, month  -->
+# 30 MARCH 2023
+
+## INBO coding club
+
+<!--  Adjust the room number and name  -->
+Herman Teirlinck Building
+
+01.05 - Isala Van Diest
+
+---
+class: left, top
+
+## ROOMIE: room reservation
+
+```
+> if (isFALSE(roomie)) {
++   warning("Please confirm asap the room reservation on the roomie")
++ }
+Warning message:
+Please confirm asap the room reservation on the roomie
+```
+
+---
+class: left, top
+
+## Record the session
+
+Kind reminder to... myself.
+
+---
+class: center, middle
+
+<!-- Create a new badge using Inkscape or other programs based on the assets/images/coding_club_badges.svg file -->
+![:scale 90%]({{ site.baseurl}}/assets/images/20230330/20230330_badge_ggplot.png)
+
+---
+class: center, top
+
+![:scale 100%]({{ site.baseurl}}/assets/images/20230330/20230330_cheat_sheet_ggplot.png)
+Download [cheatsheet](https://github.com/inbo/coding-club/blob/master/cheat_sheets/20230330_cheat_sheet_ggplot2.pdf)
+
+---
+class: left, middle
+
+### How to get started?
+
+Check the [Each session setup](https://inbo.github.io/coding-club/gettingstarted.html#each-session-setup) to get started.
+
+### First time coding club?
+
+Check the [First time setup](https://inbo.github.io/coding-club/gettingstarted.html#first-time-setup) section to setup.
+
+---
+class: left, top
+
+![:scale 100%]({{ site.baseurl}}/assets/images/coding_club_sticky_concept.png)
+
+---
+class: center, top
+
+# Share your code during the coding session
+
+<!-- Create a new hackmd file and replace this link (twice!) -->
+Go to https://hackmd.io/Tgu8AXQTRP2OgZZHnInVRw?both and start by adding your name in section "Participants".
+
+<iframe src="https://hackmd.io/Tgu8AXQTRP2OgZZHnInVRw?edit" height="400px" width="800px"></iframe>
+
+---
+class: left, top
+
+# Download data and code
+
+You can download the material of today:
+
+- automatically via `inborutils::setup_codingclub_session()`*
+
+- manually** from GitHub foders [coding-club/data/20230330](https://github.com/inbo/coding-club/tree/master/data/20230330) and [coding-club/src/20230330](https://github.com/inbo/coding-club/tree/master/src/20230330)
+
+<br>
+<small> __\* Note__: you can use the date in "YYYYMMDD" format to download the coding club material of a specific day, e.g. run `setup_codingclub_session("20230228")` to download the coding club material of February, 28 2023. If date is omitted, i.e. `setup_codingclub_session()`, the date of today is used. For all options, check the [tutorial online](https://inbo.github.io/tutorials/tutorials/r_setup_codingclub_session/).</small>
+<br>
+<small> __\*\* Note__: check the getting started instructions on [how to download a single file](https://inbo.github.io/coding-club/gettingstarted.html#each-session-setup)</small>
+
+---
+class: left, top
+
+# Data and scripts description
+
+Today we will work with national/regional checklist data about Invasive Alien Species (IAS).
+
+- `20230330_ias_first_observed_BE.txt`: dataset about year of first observation of IAS in Belgium from 1950
+- `20230330_ias_first_observed_regions.txt`: dataset about year of first observation of IAS in Belgian regions from 1950
+- `20230330_ias_pathways.txt`: dataset about pathway of introduction of IAS in Belgium from 1950
+
+- `20230330_challenges.R`: R script with code to start with
+
+---
+class: left, middle
+
+# ggplot recipe: data - mapping - geometry
+
+![:scale 80%]({{ site.baseurl}}/assets/images/20230330/20230330_ggplot_recipe.png)
+
+---
+class: left, top
+
+# Load libraries
+
+```r
+library(tidyverse)
+```
+
+---
+background-image: url({{ site.baseurl}}/assets/images/background_challenge_1.png)
+class: left, top
+
+# Challenge 1
+
+1. Make a bar chart with the number of taxa observed for the first time in Belgium per year. Tip: check the difference between `geom_bar()` and `geom_col()`.
+2. Change x and y labels to "year of introduction" and "number of taxa" respectively.
+3. Show only data from 1980 up to the latest year of `first_observed`.
+. Sometimes is better to show aggregated data to better deal with outliers and show trends. In this case, how to group years in bins of 5 years.
+4. **Fill** all bars with color blue and set contour **color** to red.
+5. Sometimes, it is better to show aggregated data to better deal with outliers and show trends. In this case, group years in bins of 5 years.
+
+---
+class: left, top
+
+## Intermezzo: aesthetics
+
+
+```
+ggplot(data = ias_be, mapping = aes(x = first_observed)) +
+  geom_bar()
+
+```
+
+This works too:
+
+```
+ggplot(data = ias_be) +
+  geom_bar(mapping = aes(x = first_observed))
+```
+
+Both are good. Still, we have the feeling that the second version is used more often. The only case in which it is better to opt for the second option is when you plot two or more geometries with **different** aesthetics. For example, plot pressure and temperature vs time* :
+
+```
+# dummy dataset
+press_temp <- tibble::tibble(
+  year = c(2000:2004),
+  press = c(1.0, 1.1, 1.4, 1.2, 1.6),
+  temp = c(13.2, 15.1, 12.2, 11.8, 10.9)
+)
+ggplot(press_temp) +
+  geom_point(mapping = aes(x = year, y = press)) +
+  geom_point(mapping = aes(x = year, y = temp), color = "red") +
+  scale_y_continuous(sec.axis = sec_axis(~., name = "temperature")) +
+  theme(axis.line.y.right = element_line(color = "red"),
+        axis.text.y.right = element_text(color = "red"),
+        axis.title.y.right = element_text(color = "red"))
+```
+
+<br>
+<small> __\* Note__: such kind of plot is bad practice, by the way.
+
+---
+background-image: url({{ site.baseurl}}/assets/images/background_challenge_2.png)
+class: left, top
+
+# Challenge 2
+
+1. Make a bar chart plot similar to the ones in challenge 1 at regional level. How are the bars displayed per region, by default?
+2. How to set them next to each other?
+3. How to split the bar chart in subplots based on kingdom? Set the y scale free.
+4. Set the order of the subplots as in the figure on the left
+5. Split sublots by kingdom and location as in the figure on the right
+
+![:scale 100%]({{ site.baseurl}}/assets/images/20230330/20230330_facets.png)
+
+---
+class: left, top
+
+## Intermezzo: customize non-data components - themes
+
+
+You can personalize almost everything within your plots. ggplot2 provides some predefined themes via functions named `theme_*()`, e.g. `theme_bw()` for a white background with black lines. See more on cheat sheet.
+
+
+```r
+ggplot(data = ias_be, mapping = aes(x = first_observed)) +
+    geom_bar() + theme_bw()
+```
+
+But you can also customize any non-data component via function `theme()`! Give a look to help `?theme`. Notice the help functions `element_*()`, e.g. `element_line()`, `element_text()` and  `element_rect()`.
+
+```r
+ggplot(data = ias_be, mapping = aes(x = first_observed)) +
+  geom_bar() +
+  theme(panel.background = element_rect(fill = "red"),
+        panel.grid.major = element_line(colour = "blue", linewidth = 2))
+```
+
+---
+class: left, top
+
+## Intermezzo: customize non-data components - themes
+
+Do you know that INBO has its own theme? It's called [INBOtheme](https://inbo.github.io/INBOtheme/): it's a package. Install it, load it and all figures will have authomatically an INBO touch. Read the nice [tutorials](https://inbo.github.io/INBOtheme/articles/index.html) for more.
+
+```r
+library(INBOtheme)
+
+ggplot(data = ias_be, mapping = aes(x = first_observed)) +
+  geom_bar() +
+  ggtitle(label = "Temporal distribution of alien species introdutions")
+```
+
+
+---
+background-image: url({{ site.baseurl}}/assets/images/background_challenge_3.png)
+class: left, top
+
+# Challenge 3 - Categorical variables
+
+1. Create a bar chart plot with number of introduced taxa per pathway and kingdom, see figure on the left. Note the space among the bars within same pathway. You can use INBOtheme to get same colors and text style.
+2. After adding `bins_first_observed_label` column (code provided), try to reproduce the plot on the right.
+
+![:scale 100%]({{ site.baseurl}}/assets/images/20230330/20230330_challenge3.png)
+
+
+---
+class: left, top
+
+# Bonus challenge
+
+Starting from the [ToothGrowth](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/ToothGrowth) dataset,
+you can plot the tooth length against the dose of the supplement using
+
+```
+ggplot(ToothGrowth, aes(x = dose, y = len, color = supp)) +
+  geom_point()
+```
+
+However, with so many points it is hard to see the effect of supp and dose on
+len. A box plot (`geom_boxplot()`) could help, but what's gone wrong with this
+code? The x , dose, doesn't make any sense. How to solve it?
+
+---
+class: left, top
+
+# The package of the month. Hans' choice
+
+The [ggforce](https://ggforce.data-imaginist.com/index.html) package will give a boost to your plots created via ggplot2. Examples:
+- `facet_matrix()`: to put different data columns into different rows and columns in a grid of panels
+- `geom_sina()`: to plot any single variable in a multiclass dataset
+- `facet_zoom()`: to zoom in on a subset of the data, while keeping the view of the full dataset
+
+![:scale 100%]({{ site.baseurl}}/assets/images/20230330/20230330_ggforce.png)
+
+---
+class: left, top
+
+## Resources
+
+- [Challenges solutions](https://github.com/inbo/coding-club/blob/master/src/20230330/20230330_challenges_solutions.R)
+- `ggplot2` website: https://ggplot2.tidyverse.org/
+- R for Data Science: [Chapter 3: Data visualization](https://r4ds.had.co.nz/data-visualisation.html)
+- Article of H. Wickham about the layered [grammar of graphics](http://vita.had.co.nz/papers/layered-grammar.pdf)
+- [Datacarpentry's data visualiation tutorial](https://datacarpentry.org/R-ecology-lesson/04-visualization-ggplot2.html)
+- [Stanford University tutorial](https://cengel.github.io/R-data-viz/data-visualization-with-ggplot2.html): chapter 1
+- R for Data Science: [Chapter 28: Graphics for communication](https://r4ds.had.co.nz/graphics-for-communication.html)
+- [INBOtheme](https://inbo.github.io/INBOtheme/) homepage
+- [ggforce](https://ggforce.data-imaginist.com/index.html) homepage
+
+---
+class: left, top
+
+# Coding club topics 2023: you vote!
+
+Every month you can vote among **two topics**!
+
+Poll for April's coding club is still open! Let us know your favorite before tomorrow!
+
+https://forms.gle/AdRMwq6i8swwH6H49
+
+You can choose between:
+
+- Beyond ggplot: boost your graphs with other visualization packages
+- Spatial vector data with sf package: points, lines, polygons, multipolygons, ...
+
+
+---
+class: center, middle
+
+![:scale 30%]({{ site.baseurl}}/assets/images/coding_club_logo_1.png)
+
+<!--  Adjust the room and date  -->
+Room: 01.05 - Isala Van Diest<br>
+Date: __25/04/2023__, van 10:00 tot 12:30<br>
+Subject: **Beyond ggplot** or **Spatial data with sf** <br>
+(registration announced via DG_useR@inbo.be)

@@ -1,0 +1,351 @@
+---
+layout: presentation
+title: dates and strings in R
+---
+class: center, top
+
+![:scale 30%]({{ site.baseurl}}/assets/images/coding_club_logo_1.png)
+
+<!-- Do not forget to adapt the presentation title in the header! -->
+
+  <!-- Adjust the presentation to the session. Focus on the challenges,
+this is not a coding tutorial.
+
+Note, to include figures, store the image in the `/docs/assets/images`
+folder and use the jekyll base.url reference as done in this template
+or see https://jekyllrb.com/docs/liquid/tags/#links.
+  using the scale attribute ![:scale 30%](...), you can adjust the image size.
+-->
+
+<!--  Adjust the day, month  -->
+# 26 JANUARY 2023
+
+## INBO coding club
+
+<!--  Adjust the room number and name  -->
+Herman Teirlinck<br>
+01.72 - Kaat Tilley<br>
+
+---
+class: left, top
+
+## ROOMIE: room reservation
+
+```
+> if (isFALSE(roomie)) {
++   warning("Please confirm asap the room reservation on the roomie")
++ }
+Warning message:
+Please confirm asap the room reservation on the roomie
+```
+
+---
+class: left, top
+
+## Record the session
+
+![:scale 60%]({{ site.baseurl}}/assets/images/20230126/20230126_rec.png)
+
+Kind reminder to myself.
+
+---
+class: left, top
+
+## Open software: the LIFE RIPARIAS example
+
+Sometimes, a blank space can cause serious damages to a web application... Reporting the bug to GBIF and the problem was solved incredibly fast! Good for you, good for everybody else!
+
+![:scale 75%]({{ site.baseurl}}/assets/images/20230126/20230126_gbif_issue.png)
+
+---
+class: center, middle
+
+---
+class: center, middle
+
+![]({{ site.baseurl}}/assets/images/20230126/20230126_iso_8601.png)
+<br> [xkcd comics](https://xkcd.com/1179)
+
+
+
+---
+class: center, middle
+
+<!-- Create a new badge using Inkscape based on the assets/images/coding_club_badges.svg file -->
+![:scale 90%]({{ site.baseurl}}/assets/images/20230126/20230126_badge.png)
+
+---
+class: left, top
+
+The main reference material for today's coding club:
+
+![:scale 80%]({{ site.baseurl}}/assets/images/20230126/20230126_packages_homepage.png)
+
+- [lubridate cheat sheet](https://github.com/inbo/coding-club/blob/main/cheat_sheets/20230126_cheat_sheet_lubridate.pdf)
+- [stringr cheat sheet](https://github.com/inbo/coding-club/blob/main/cheat_sheets/20220428_cheat_sheet_stringr.pdf)
+
+
+---
+class: left, top
+
+# R packages
+
+Load the packages (or install them first):
+
+```r
+library(tidyverse)    # it imports stringr as well
+library(lubridate)    # lubridate is not part of the tidyverse core packages
+```
+
+---
+class: center, top
+
+### How to get started?
+
+Check the [Each session setup](https://inbo.github.io/coding-club/gettingstarted.html#each-session-setup) to get started.
+
+### First time coding club?
+
+Check the [First time setup](https://inbo.github.io/coding-club/gettingstarted.html#first-time-setup) section to setup.
+
+
+---
+class: left, top
+
+![:scale 100%]({{ site.baseurl}}/assets/images/coding_club_sticky_concept.png)
+
+---
+class: center, top
+
+### Share your code during the coding session!
+
+<!-- Create a new hackmd file and replace this link (twice!) -->
+Go to https://hackmd.io/BzTg8o1tS6W4-R9HjCCv0Q?both
+
+<iframe src="https://hackmd.io/BzTg8o1tS6W4-R9HjCCv0Q?edit" height="450px" width="800px"></iframe>
+
+---
+class: left, top
+
+# Download data and code
+
+- Download everything automatically via `inborutils::setup_codingclub_session()`
+- manually*, from [data/20230126](https://github.com/inbo/coding-club/blob/master/data/20230126/) and [src/20230126](https://github.com/inbo/coding-club/blob/master/src/20230126). Place the R script in `/src/20230126/` and data in `/data/20230126/`.
+
+<small>* __Note__: check the getting started instructions on [how to download a single file](https://inbo.github.io/coding-club/gettingstarted.html#each-session-setup)</small>
+
+---
+class: left, top
+
+# Data and scripts description
+
+- [20230126_persian_hogweed_2022_scandinavia.txt](https://github.com/inbo/coding-club/blob/master/data/20230126/20230126_persian_hogweed_2022_scandinavia.txt): presences of Persian hogweed (_Heracleum persicum_) in Scandinavia (Finland, Sweden and Norway) in 2022. Source: GBIF.org (19 January 2023) GBIF Occurrence Download https://doi.org/10.15468/dl.85bnkw
+- [20230126_deployments.txt](https://github.com/inbo/coding-club/blob/master/data/20230126/20230126_deployments.txt): deployments of a camera trap project in Belgium. Source: the official [example](https://github.com/tdwg/camtrap-dp/blob/ab9f0be7a3fd10113ab00392b8df9d4630683fc5/example/deployments.csv) of the [Camera Trap Data Package](https://tdwg.github.io/camtrap-dp) data exchange format.
+- [20230126_pheno_phlogo.txt](https://github.com/inbo/coding-club/blob/master/data/20230126/20230126_pheno_phlogo.txt): phenology observations of Angle shades (_Phlogophora meticulosa_). Source: Dirk Maes.
+- [20230126_challenges.R](https://github.com/inbo/coding-club/blob/master/src/20230126/20230126_challenges.R): R script to start from (some code is already provided)
+
+---
+class: left, top
+
+# Why lubridate?
+
+A lot of reasons. But the main one is that it is very flexible while reading heterogenous strings representing date(times). I hope this example is enough:
+
+```
+horrible_mix_datetimes <- c(
+  "2022-01-03a02;01;01",
+  "20220103x02:01:01",
+  "2022-01-03a02.01.01",
+  "20220103T02:01:01",
+  "2022010302:01:01"
+)
+lubridate::ymd_hms(horrible_mix_datetimes)
+[1] "2022-01-03 02:01:01 UTC" "2022-01-03 02:01:01 UTC" "2022-01-03 02:01:01 UTC"
+[4] "2022-01-03 02:01:01 UTC" "2022-01-03 02:01:01 UTC"
+```
+
+---
+background-image: url({{ site.baseurl}}/assets/images/background_challenge_1.png)
+class: left, top
+
+# Challenge 1
+
+1. After reading the dataset `persian_hogweed_2022_scandinavia.csv` (code given), add a new column `date` to the data.frame of the type "Date" (see screenshot).
+2. Add a column called `weekday` with the day of the week, e.g. "Monday".  Do you get week names in other language, e.g. Dutch? You probably need to specify the language `"English"` somewhere in the function :-) Tip: use [day.html](https://lubridate.tidyverse.org/reference/day.html) or the lubridate cheat sheet.
+3. Use a *stamp* to create dates like this `"Occurrence recorded on Monday, Jan 23, 2023"`. Put them in a new column called `date_stamp`.
+4. Add a column called `label` combining the values in columns `species`, `countryCode` and `date` in this way: "Occurrence of Heracleum persicum found in SE on Fri, 25-9-22.".
+
+
+![:scale 90%]({{ site.baseurl}}/assets/images/20230126/20230126_dataframe_with_date_challenge1.png)
+
+---
+class: left, top
+
+## Intermezzo. UTC, time zones & Daylight Saving Time
+
+Some definitions:
+
+- UTC (Coordinated Universal Time): not a time zone, but THE ** time standard**. See https://24timezones.com/time-zone/utc
+
+- GMT (Greenwich Mean Time) : one of the well-known names of UTC+0 ** time zone**). GMT does observe Daylight Saving Time (unlike UTC which is not a time zone!), more on https://24timezones.com/gmt-vs-utc
+
+- World time zone map: https://24timezones.com/timezone-map
+
+- DST (Daylight Saving Time): “spring forward, fall back". 2019-03-26: [European Parliament voted in favor of a ban of DST by end 2021](https://www.dw.com/en/eu-parliament-votes-to-end-daylight-savings/a-48064185). However, finding a compromise with each EU member state was not as smooth as expected. Reasons? Pandemic, Brexit, bureaucracy and a substantial lack of  support from the state governements. Read [more](https://www.bloomberg.com/news/articles/2021-03-11/will-daylight-saving-time-ever-end) if interested.
+
+
+<p>![:scale 40%]({{ site.baseurl}}/assets/images/20230126/20230126_daylight_saving_time.png)
+
+---
+class: left, middle
+
+## Intermezzo. UTC, time zones & Daylight Saving Time
+
+- How to define time zones? Typically `"Continent/City"` works well:
+
+```r
+as_datetime("2020-08-01 09:00:00", tz = "Asia/Tehran")
+[1] "2020-08-01 09:00:00 +0430"
+as_datetime("2020-08-01 09:00:00", tz = "Europe/Brussels")
+[1] "2020-08-01 09:00:00 CEST"
+```
+
+or a time zone abbreviation:
+
+```r
+as_datetime("2020-08-01 09:00:00", tz = "CET")
+[1] "2020-08-01 09:00:00 CEST"
+```
+
+Note the authomatic conversion to CEST (Central Europe *Summer* Time). However, if you use CEST it will not work, and you get the GMT version:
+
+```r
+as_datetime("2020-08-01 09:00:00", tz = "CEST")
+[1] "2020-08-01 07:00:00 GMT"
+Warning message:
+In as.POSIXlt.POSIXct(x, tz) : unknown timezone 'CEST'
+```
+
+CEST is ** NOT **  a time zone!
+
+---
+background-image: url({{ site.baseurl}}/assets/images/background_challenge_2.png)
+class: left, top
+
+# Challenge 2
+
+First, read 20230126_deployments.txt (code provided!). Notice how the datetimes are authomatically read as standard UTC times if expressed in the ISO standard , i.e. yyyy-mm-ddThh:mm:ss!
+
+1. Add a column called local_start and local_end with clock time showing the timezone. The deployments are all located in Belgium. Notice that the datetimes in `start` and `end` are UTC times. Tip: read the [time-zones](https://lubridate.tidyverse.org/reference/lubridate-package.html#time-zones) section from the "Get started".
+2. Oh no, the data manager said us that `start` and `end` are not UTC times but local times: a bug in the system  caused the loss of the time zone while writing the datetime. How to set `local_time` and `local_end` properly in this case? Tip: the same as before. Correct UTC `start` and `end` columns as well.
+3. Based on `start` and `end`, calculate the duration of each deployment and store it in column `duration`
+4. Get hour and day information of the start of the deployments. You can store them as additional columns called `hour_start`, `day_start`
+
+
+---
+class: left, top
+
+## Intermezzo: <b>reg</b><small>ular</small> <b>ex</b><small>pressions</small>
+
+How to detect/remove/extract:
+- any kind of digit?
+- anything but letters `a `, `b` and `e`?
+- all  full stops (`.`)?
+- any extra full stop (`.`)?
+
+![:scale 40%]({{ site.baseurl}}/assets/images/20230126/20230126_regular_expresssions.png)
+<br>Try yourself some of these rules before moving to challenge 3.
+
+Also check the very useful [regex101](https://regex101.com) website.
+
+---
+background-image: url({{ site.baseurl}}/assets/images/background_challenge_3.png)
+class: left, top
+
+
+# Challenge 3
+
+1. Select the occurrences of persian hogweed coming from the [Finnish Biodiversity Information Facility](https://laji.fi/en) (FinBIF), i.e. the occurrences with occurrenceID starting with `http://tun.fi/`. Store them in a new data.frame called `finbif_occs`.
+2. Retrieve the authorship from column `scientificName`, i.e. the string after the value in column `species`. Store it in a new column called `authorship`.
+3. Get the "internal" ID for each occurrence of `persian_hogweed` dataframe. Such ID is the number after the very last colon (`:`), dot (`.`) or slash (`/`), e.g. `105853683` for `urn:lsid:artportalen.se:sighting:105853683` or `36631219` for `http://tun.fi/MKC.36631219` or `63a587a8d5de65595547a609#Unit1` for `http://tun.fi/KE.176/63a587a8d5de65595547a609#Unit1`. Tip: one of [these functions](https://stringr.tidyverse.org/reference/str_split.html) and a simple regex can help you a lot!
+
+---
+class: left, top
+
+# Bonus challenge: strings
+
+Regex is very powerful but can become quite complex. Fortunately, we have the cheat sheet and regex101 website. But also we have the entire internet, full of regex questions/answers :-)
+
+1. The occurrences in `finbif_occs` are coming from different projects. They can be identified by the letters following the prefix `"http://tun.fi/"` and preceding a dot, e.g.  `MKC` for `http://tun.fi/MKC.36631219`,  `JX` for `http://tun.fi/JX.1443935#3`. Extract the project acronyms from the `occurrenceID` of `finbif_occs` and store them in column `project`. Tip: check the cheat sheet and use [regex101](https://regex101.com) website.
+
+2. Metal rings, typically applied to animals such as birds, should be expressed
+as a letter followed by a sequence of 10 digits. If less than 10 digits are
+present on the ring, dots should be added between the letter and the digits.
+Example: `E123456` should become `E.....123456`. Tip: cheat sheet helps a lot!
+
+```
+metal_rings <- c("A1234567890", "B123456789", "C12345678", "D1234567")
+```
+
+---
+class: left, top
+
+# Bonus challenge: dates
+
+The provided code in 20230126_challenges.R analyzes produces a plot where data are grouped by week. How to leave the plot as it is but putting breaks and labels at month level? You should get something like this plot below. Tip: use ggplot function `scale_x_continuous()` and define the right values for `breaks` and `labels` arguments.
+
+
+![110%]({{ site.baseurl}}/assets/images/20230126/20230126_bonus_challenge_dates_result.png)
+
+---
+class: left, middle
+
+# The future of UTC: to leap or not to leap?
+
+UTC is based on time as measured by atomic clocks so it is independent of Earth's rotation.
+The [leap second](https://en.wikipedia.org/wiki/Leap_second) is a one-second adjustment that is occasionally applied to Coordinated Universal Time (UTC), to accommodate the imprecise observed solar time (irregularities and slowdown in the Earth's rotation).
+
+![:scale 75%]({{ site.baseurl}}/assets/images/20230126/20230126_leapsecond2016.png)
+
+So, what to do with these annoying leap seconds? Should the standard UTC be getting rid of them or not?
+
+---
+class: left, top
+
+# Resources
+
+- [Solutions](https://github.com/inbo/coding-club/blob/main/src/20230126/20230126_challenges_solutions.R) and [video recording](https://vimeo.com/796590222) available
+- [lubridate](https://lubridate.tidyverse.org) package homepage
+- [stringr](https://stringr.tidyverse.org) package homepage
+- [lubridate cheat sheet](https://github.com/inbo/coding-club/blob/main/cheat_sheets/20230126_cheat_sheet_lubridate.pdf)
+- [stringr cheat sheet](https://github.com/inbo/coding-club/blob/main/cheat_sheets/20220428_cheat_sheet_stringr.pdf)
+- [Chapter 16: Dates and times](https://r4ds.had.co.nz/dates-and-times.html) from the "R for Data Science" digital book
+- test your regex via [regex101](https://regex101.com) website
+- The [world time zone map](https://24timezones.com/timezone-map)
+- [GMT versus UTC](https://24timezones.com/gmt-vs-utc)
+- News about the [ban of day-light saving time](https://www.dw.com/en/eu-parliament-votes-to-end-daylight-savings/a-48064185) by end 2021 and the subsequent [obstacles](https://www.bloomberg.com/news/articles/2021-03-11/will-daylight-saving-time-ever-end).
+- The fascinating world of the [leap second](https://en.wikipedia.org/wiki/Leap_second)
+
+---
+class: left, top
+
+# Coding club topics 2023: you vote!
+
+Every month you can vote among **two topics**!
+
+Poll for February's coding club is open! Let us know your favorite before **1 February 2023**
+
+https://forms.gle/V4w6U39FkHUqTjYu5
+
+![25%]({{ site.baseurl}}/assets/images/20230126/20230126_packages_fight.jpg)
+
+---
+class: center, middle
+
+![:scale 30%]({{ site.baseurl}}/assets/images/coding_club_logo_1.png)
+
+<!--  Adjust the room number and name  -->
+Topic: data manipulation OR making outstanding plots with ggplot <br>
+Room:  HT - 01.04 - Transitielab <br>
+Date: **28/02/2023**, from **10:00** to **12:30** <br>
+Help needed with technical setup? You are welcom from **9:45am**
