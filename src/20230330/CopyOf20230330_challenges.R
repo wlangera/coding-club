@@ -91,7 +91,8 @@ library(INBOtheme)
 
 ias_path %>%
   ggplot() +
-    geom_bar(aes(x = pathway, fill = kingdom), position = "dodge") +
+    geom_bar(aes(x = pathway, fill = kingdom),
+             position = position_dodge2(padding = 0.1)) +
     labs(y = "number of taxa") +
     coord_flip()
 
@@ -113,4 +114,14 @@ ias_path %>%
     geom_point(shape = 1, size = 3) +
     geom_line(aes(group = pathway)) +
     labs(x = "time period", y = "number of taxa")
+
+
+## BONUS CHALLENGE
+
+ggplot(ToothGrowth, aes(x = factor(dose), y = len, color = supp)) +
+  geom_boxplot() +
+  geom_point(aes(group = supp),
+             position = position_jitterdodge(jitter.width = 0.5)) +
+  labs(x = "dose", y = "length")
+
 
