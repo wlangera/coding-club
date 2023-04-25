@@ -141,4 +141,3 @@ ggplotly(ias_first_obs_paths, dynamicTicks = TRUE)
 
 # 3
 
-
