@@ -48,3 +48,7 @@ _site/
 
 # HTML files
 *.html
+
+# GIFs and videos
+*.mp4
+*.GIF

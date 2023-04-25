@@ -68,8 +68,10 @@ ias_first_obs_paths
 
 ## CHALLENGE 1
 # Solution Ward
+library(INBOtheme)
+
 # 1
-ias_first_obs_be + ias_first_obs_reg
+ias_first_obs_be | ias_first_obs_reg
 
 # 2
 ias_first_obs_be / ias_first_obs_reg
@@ -98,13 +100,45 @@ tab <- ias_regions %>%
 ias_first_obs_reg_facets2 + gridExtra::tableGrob(tab)
 
 ## CHALLENGE 2
+# Solution Ward
+# 1
+ias_first_obs_paths +
+  facet_zoom(xy = first_observed >= 1980 & first_observed <= 2000,
+             horizontal = FALSE)
 
+# 2
+ias_first_obs_reg +
+  facet_wrap_paginate(~kingdom, strip.position = "bottom") +
+  theme(legend.position = "top") +
+  labs(x = "", y = "aantal", fill = "locatie")
 
 
 ## CHALLENGE 3A
+p <- area_biotopes %>%
+  ggplot(aes(x = species, y = meanArea)) +
+    geom_point(aes(colour = biotope, size = meanArea)) +
+    facet_wrap(~region) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+    labs(title = 'Year: {frame_time}') +
+    transition_time(year) +
+    ease_aes("cubic-in-out")
 
-
+# Save as GIF
+library(gifski)
+anim_save("area_biotopes.GIF", animation = p, renderer = gifski_renderer(),
+          width = 1000, height = 300, path = "src/20230425")
+# Save as mp4
+library(av)
+anim_save("area_biotopes.mp4", animation = p, renderer = av_renderer(),
+          width = 1000, height = 300, path = "src/20230425")
 
 ## CHALLENGE 3B
+# 1
+ggplotly(ias_first_obs_paths)
+
+# 2
+ggplotly(ias_first_obs_paths, dynamicTicks = TRUE)
+
+# 3
 
 
