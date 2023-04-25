@@ -1,8 +1,8 @@
 library(tidyverse)
-library(patchwork)
-library(ggforce)
-library(gganimate)
-library(plotly)
+library(patchwork) # challenge 1
+library(ggforce)   # challenge 2
+library(gganimate) # challenge 3
+library(plotly)    # challenge 3
 
 ## preliminary code to run
 
@@ -67,9 +67,35 @@ ias_first_obs_paths
 
 
 ## CHALLENGE 1
+# Solution Ward
+# 1
+ias_first_obs_be + ias_first_obs_reg
 
+# 2
+ias_first_obs_be / ias_first_obs_reg
 
+# 3
+ias_first_obs_reg_facets <- ias_first_obs_reg +
+  facet_wrap(~locationId) +
+  theme(legend.position = "bottom")
 
+ias_first_obs_be / ias_first_obs_reg_facets
+
+# 4
+ias_first_obs_be_facets <- ias_first_obs_be +
+  facet_wrap(~kingdom)
+
+ias_first_obs_reg_facets2 <- ias_first_obs_reg_facets +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+(ias_first_obs_be / ias_first_obs_reg_facets2) | ias_first_obs_be_facets
+
+# 5
+tab <- ias_regions %>%
+  count(locationId) %>%
+  arrange(locationId)
+
+ias_first_obs_reg_facets2 + gridExtra::tableGrob(tab)
 
 ## CHALLENGE 2
 
