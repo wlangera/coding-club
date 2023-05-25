@@ -163,6 +163,10 @@ custom_min <- function(x) {
 get_migrations <- function(df,
                            dist_threshold,
                            speed_threshold) {
+
+  assertthat::assert_that(is.numeric(dist_threshold))
+  assertthat::assert_that(all(c("arrival", "totaldistance_m") %in% names(df)))
+
   df %>%
     mutate(dist_threshold = totaldistance_m + dist_threshold) %>%
     rowwise() %>%
