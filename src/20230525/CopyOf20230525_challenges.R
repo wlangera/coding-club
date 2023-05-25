@@ -8,14 +8,14 @@ library(tidyverse)
 #' that respectively indicate how many even and odd digits occur in n
 #'
 #' @examples
-#' evenOdd(398473234) -> (4, 5)
-#' evenOdd(459) -> (1, 2)
+#' evenOdd(398473234) # -> (4, 5)
+#' evenOdd(459) # -> (1, 2)
 evenOdd <- function(n) {
   char_n <- as.character(n)
   counter_even <- 0
   counter_odd <- 0
-  for (i in char_n) {
-    digit <- as.integer(i)
+  for (i in seq_len(nchar(char_n))) {
+    digit <- as.integer(substr(char_n, i, i))
     if (digit %% 2 == 0) {
       counter_even <- counter_even + 1
     } else {
@@ -25,7 +25,6 @@ evenOdd <- function(n) {
   return(list(n_even = counter_even,
               n_odd = counter_odd))
 }
-
 
 ## CHALLENGE 2
 
