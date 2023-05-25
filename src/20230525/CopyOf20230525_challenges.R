@@ -85,7 +85,7 @@ steps <- function(n) {
 #' custom_min(c(8, 4, 2, 5)) # this works
 #' custom_min(c("e", "r", "a")) # this should return an error
 custom_min <- function(x) {
-  if (length(x)>0) min(x) else NA
+  if (length(x) > 0) min(x) else NA
 }
 
 
@@ -106,7 +106,7 @@ custom_min <- function(x) {
     msg = "Invalid type of input: only numeric vectors allowed."
   )
   # function core follows
-  if (length(x)>0) min(x) else NA
+  if (length(x) > 0) min(x) else NA
 }
 
 ## CHALLENGE 3
