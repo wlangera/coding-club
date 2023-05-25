@@ -50,7 +50,8 @@ step <- function(n) {
   total_digits <- nchar(n)
   n_odd_even_total <- n_odd_even
   n_odd_even_total$n_total <- total_digits
-  return(n_odd_even_total)
+  out <- as.numeric(paste(n_odd_even_total, collapse = "")) # add this line
+  return(out)
 }
 
 
@@ -64,6 +65,7 @@ step <- function(n) {
 #' steps(2)
 #' 2
 steps <- function(n) {
+  n_steps <- 0 # add this line
   while (n != 123) {
     n <- step(n)
     n_steps <- n_steps + 1
