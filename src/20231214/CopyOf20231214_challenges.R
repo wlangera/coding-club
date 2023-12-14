@@ -16,6 +16,24 @@ hab_springs <- sf::st_read("./data/20231214/20231214_habitatsprings_flanders.geo
 
 mapview::mapview(hab_springs)
 
+## CHALLENGE 0
+qgis_providers()
+
+input <- sf::read_sf(system.file("shape/nc.shp", package = "sf"))
+result <- qgis_run_algorithm(
+  "native:buffer",
+  INPUT = input,
+  DISTANCE = 1,
+  DISSOLVE = TRUE
+)
+result
+#> <Result of `qgis_run_algorithm("native:buffer", ...)`>
+#> List of 1
+#>  $ OUTPUT: 'qgis_outputVector' chr "C:\\Users\\WARD_L~1\\AppData\\Local\\Temp\\Rtmp00fnyU\\file79b8649561d8\\file79b81dced31.gpkg"
+output_sf <- sf::st_as_sf(result)
+plot(sf::st_geometry(output_sf))
+
+
 ## CHALLENGE 1
 
 
