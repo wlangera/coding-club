@@ -116,6 +116,7 @@ library(tictoc) # install it first, if needed
 tic("buffer via sf")
 buffer_via_sf <- sf::st_buffer(water, nQuadSegs = 5000, dist = 100)
 toc()
+#> buffer via sf: 25.95 sec elapsed
 
 tic("buffer via qgisprocess")
 buffer_via_qgisprocess <- qgis_run_algorithm(
@@ -125,7 +126,7 @@ buffer_via_qgisprocess <- qgis_run_algorithm(
   DISTANCE = 100
 )
 toc()
-
+#> buffer via qgisprocess: 22.75 sec elapsed
 
 ## CHALLENGE 2
 
