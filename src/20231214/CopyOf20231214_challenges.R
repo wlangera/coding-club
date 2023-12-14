@@ -41,9 +41,7 @@ mapview(output_sf)
 
 
 ## CHALLENGE 1
-
-# 1. In challenge 0 we specified (a little blindly) some arguments, e.g. DISSOLVE = TRUE. What does this argument do? What happens if you set DISSOLVE = FALSE? How can you get a description of the chosen algorithm? How can you retrieve information about all the arguments allowed by the algorithm? Or about the genereated output? Hint: use the cheat sheet!
-
+# 1.
 qgis_get_argument_specs(algorithm = "native:buffer")
 qgis_show_help(algorithm = "native:buffer")
 
@@ -57,10 +55,10 @@ output_sf2 <- sf::st_as_sf(result2)
 
 mapview(output_sf2)
 
-#> Buffer per rij en bij DISOLVE = TRUE gaat hij eerst alles joinen tot 1 geometry
+#> Buffer per rij en bij DISOLVE = TRUE gaat hij eerst alles joinen tot 1
+#> geometry
 
-# 2. Calculate the ‘shortest’ path (lines) between the hab_springs points and the nearest watersurface water.
-
+# 2.
 qgis_algorithms() %>%
   filter(provider == "native",
          grepl("shortest", algorithm)) %>%
@@ -78,8 +76,7 @@ springs_to_water <- qgis_run_algorithm(
 springs_to_water_sf <- sf::st_as_sf(springs_to_water)
 mapview(springs_to_water_sf)
 
-# 3. Calculate the ‘shortest’ paths (lines) between the polygons water and the hab_springs points.
-
+# 3.
 water_to_springs <- qgis_run_algorithm(
   "native:shortestline",
   SOURCE = water,
@@ -88,8 +85,7 @@ water_to_springs <- qgis_run_algorithm(
 water_to_springs_sf <- sf::st_as_sf(water_to_springs)
 mapview(water_to_springs_sf)
 
-# 4. We are all pipe (%>%)* lovers, aren't we? Can you use qgis_run_algorithm() in a pipe? No. How to combine qgisprocess and pipes? Hint: check the cheat sheet.
-
+# 4.
 qgis_run_algorithm(
   "native:shortestline",
   SOURCE = water,
@@ -97,6 +93,7 @@ qgis_run_algorithm(
   ) |>
   st_as_sf() |>
   mapview()
+
 
 ## INTERMEZZO
 
