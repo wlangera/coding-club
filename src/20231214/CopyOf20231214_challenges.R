@@ -98,6 +98,15 @@ qgis_run_algorithm(
   st_as_sf() |>
   mapview()
 
+# also possible:
+water |>
+  qgis_run_algorithm_p(
+    "native:shortestline",
+    DESTINATION = hab_springs
+  ) |>
+  st_as_sf() |>
+  mapview()
+
 ## INTERMEZZO
 
 # Example
