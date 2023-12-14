@@ -197,5 +197,3 @@ mapview::mapview(land_use, maxpixels = 3434753) #it can take some seconds
 prot_areas <- sf::st_read("./data/20231214/20231214_natura2000_protected_areas.gpkg")
 prot_areas
 mapview::mapview(prot_areas)
-
-
