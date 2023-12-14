@@ -66,7 +66,7 @@ qgis_algorithms() %>%
 
 # the same:
 qgis_search_algorithms("shortest", provider = "native") %>%
-  select(provider, algorithm)
+  select(provider, algorithm, algorithm_title)
 
 qgis_get_argument_specs(algorithm = "native:shortestline") %>%
   select(name, description)
@@ -129,9 +129,58 @@ toc()
 #> buffer via qgisprocess: 22.75 sec elapsed
 
 ## CHALLENGE 2
+# 1.
+qgis_search_algorithms(algorithm = "count",
+                       provider = "native") %>%
+  select(provider, algorithm, algorithm_title)
 
+qgis_get_argument_specs(algorithm = "native:countpointsinpolygon") %>%
+  select(name, description)
+qgis_show_help(algorithm = "native:countpointsinpolygon")
 
+ludwigia_grandiflora <- st_read(paste0("./data/20231214/",
+                                       "20231214_ludwigia_grandiflora.geojson"))
 
+ludwigia_in_water <- qgis_run_algorithm(
+  "native:countpointsinpolygon",
+  POLYGONS = water,
+  POINTS = ludwigia_grandiflora
+  ) |>
+  st_as_sf()
+
+mapview(ludwigia_in_water)
+
+# 2.
+ludwigia_in_water_ind <- qgis_run_algorithm(
+  "native:countpointsinpolygon",
+  POLYGONS = water,
+  POINTS = ludwigia_grandiflora,
+  WEIGHT = "individualCount"
+  ) |>
+  st_as_sf()
+
+mapview(ludwigia_in_water_ind)
+
+waldo::compare(ludwigia_in_water, ludwigia_in_water_ind)
+
+# 3.
+qgis_get_argument_specs(algorithm = "native:buffer") %>%
+  select(name, description)
+qgis_show_help(algorithm = "native:buffer")
+
+# following does not work:
+# Error in `processx::run("cmd.exe", c("/c", "call", path, args), ...)`:
+# ! System command 'cmd.exe' failed
+# QGIS version too old (?)
+buffer_springs <- hab_springs |>
+  mutate(dynamic_buf = sqrt(area_m2 / pi)) |>
+  qgis_run_algorithm_p(
+    "native:buffer",
+    DISTANCE = "dynamic_buf"
+  ) |>
+  st_as_sf()
+
+mapview(buffer_springs)
 
 
 ## CHALLENGE 3
