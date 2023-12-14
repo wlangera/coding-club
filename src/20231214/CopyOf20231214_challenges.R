@@ -62,6 +62,10 @@ mapview(output_sf2)
 qgis_algorithms() %>%
   filter(provider == "native",
          grepl("shortest", algorithm)) %>%
+  select(provider, algorithm, algorithm_title)
+
+# the same:
+qgis_search_algorithms("shortest", provider = "native") %>%
   select(provider, algorithm)
 
 qgis_get_argument_specs(algorithm = "native:shortestline") %>%
@@ -93,7 +97,6 @@ qgis_run_algorithm(
   ) |>
   st_as_sf() |>
   mapview()
-
 
 ## INTERMEZZO
 
