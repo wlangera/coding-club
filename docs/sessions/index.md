@@ -3,7 +3,13 @@
 
 |date | topic | slideshow | hackmd | location | video |
 | --- | ----- | ----------| ------ | -------  | ----- |
-| 2023-05-25 | computer says no: debug youR code | [slides]({{ site.baseurl }}{% link sessions/20230525_computer_says_no.html  %}) | [hackmd](https://hackmd.io/zkAmzjw1RnOuLvVRdtCH2g?view) | 01.23 - Léon Stynen |  |
+| 2023-12-14 | qgisprocess - QGIS in R | [slides]({{ site.baseurl }}{% link sessions/20231214_qgisprocess.html  %}) | [hackmd](https://hackmd.io/nDpNbgX7T8m0ozuvKOJClA?view) | 01.05 - Isala Van Diest |  |
+| 2023-11-28 | dashboards and rshiny for beginners | [slides]({{ site.baseurl }}{% link sessions/20231128_dashboards_and_shiny_for_beginners.html  %}) | [hackmd](https://hackmd.io/mo4U_EMFTJW_B1mtEnD7eA?view) | 01.05 - Isala Van Diest | [vimeo](https://vimeo.com/891037994?share=copy)  |
+| 2023-10-26 | from code to repoRts | [slides]({{ site.baseurl }}{% link sessions/20231026_from_code_to_reports.html  %}) | [hackmd](https://hackmd.io/nZfSqMHcQj-3Vt3eZ8ZHpg?view) | 01.05 - Isala Van Diest | [vimeo](https://vimeo.com/882091035?share=copy) |
+| 2023-09-26 | functions in R | [slides]({{ site.baseurl }}{% link sessions/20230926_functions_in_r.html  %}) | [hackmd](https://hackmd.io/yL5HdXWiS6eoDdKyTZ2Gcw?view) | 01.71 - Frans Breziers | [vimeo](https://vimeo.com/873709318?share=copy) |
+| 2023-08-31 | spatial data in R | [slides]({{ site.baseurl }}{% link sessions/20230831_visualize_spatial_data_in_r.html  %}) | [hackmd](https://hackmd.io/qWAs40BeR_GwtCtnvLdJ3w?view) | 01.05 - Isala Van Diest | [vimeo](https://vimeo.com/863159918) |
+| 2023-06-27 | spatial data in R | [slides]({{ site.baseurl }}{% link sessions/20230627_spatial_data_in_r.html  %}) | [hackmd](https://hackmd.io/WgovTpD4SxuyoFGMvDMeag?view) | 01.17 - Clara Peters | [vimeo](https://vimeo.com/840403950) |
+| 2023-05-25 | computer says no: debug youR code | [slides]({{ site.baseurl }}{% link sessions/20230525_computer_says_no.html  %}) | [hackmd](https://hackmd.io/zkAmzjw1RnOuLvVRdtCH2g?view) | 01.23 - Léon Stynen | [vimeo](https://vimeo.com/831857629) |
 | 2023-04-25 | beyond ggplot | [slides]({{ site.baseurl }}{% link sessions/20230425_beyond_ggplot.html  %}) | [hackmd](https://hackmd.io/peUHuQaERrCi94LObScfdA?view) | 01.05 - Isala Van Diest | [vimeo](https://vimeo.com/823315912) |
 | 2023-03-30 | great plots with ggplot | [slides]({{ site.baseurl }}{% link sessions/20230330_ggplot.html  %}) | [hackmd](https://hackmd.io/Tgu8AXQTRP2OgZZHnInVRw?view) | 01.05 - Isala Van Diest | [vimeo](https://vimeo.com/813480198) |
 | 2023-02-28 | data manipulation booster with dplyr | [slides]({{ site.baseurl }}{% link sessions/20230228_data_manipulation_booster_with_dplyr.html  %}) | [hackmd](https://hackmd.io/B8aoQT_YRUOVks-j916YPA?view) | 01.04 - Transitielab | [vimeo](https://vimeo.com/805138374) |
