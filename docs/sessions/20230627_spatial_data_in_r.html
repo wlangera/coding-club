@@ -1,0 +1,351 @@
+---
+layout: presentation
+title: spatial data in R
+---
+
+class: center, middle
+
+![:scale 30%]({{ site.baseurl}}/assets/images/coding_club_logo_1.png)
+
+<!-- Do not forget to adapt the presentation title in the header! -->
+
+<!-- Adjust the presentation to the session. Focus on the challenges,
+    this is not a coding tutorial.
+
+    Note, to include figures, store the image in the `/docs/assets/images/yyyymmdd/`
+    folder and use the jekyll base.url reference as done in this template
+    or see https://jekyllrb.com/docs/liquid/tags/#links.
+    using the scale attribute ![:scale 30%](...), you can adjust the image size.
+-->
+
+<!--  Adjust the day, month  -->
+# 27 JUNE 2023
+
+## INBO coding club
+
+<!--  Adjust the room number and name  -->
+Herman Teirlinck Building
+
+01.17 - Clara Peters
+
+---
+class: left, top
+
+# Reminders
+
+1. Did we confirm the room reservation on the _roomie_?
+2. Did we start the recording?
+
+---
+class: center, middle
+
+<!-- Create a new badge using Inkscape or other programs based on the assets/images/coding_club_badges.svg file -->
+![:scale 90%]({{ site.baseurl}}/assets/images/20230627/20230627_badge_spatial.png)
+
+---
+class: left, top
+
+# The sf package
+
+![:scale 80%]({{ site.baseurl}}/assets/images/20230627/20230627_sf_principle.jpg)
+
+The [sf homepage](https://r-spatial.github.io/sf/) is the best place to start your "spatial" voyage.
+
+---
+class: left, top
+
+# The sf package
+
+sf stays for: _[simple features](https://en.wikipedia.org/wiki/Simple_Features)_, a scary way to express "geographic features", where feature is a scary term to refer to an abstraction of real world phenomena with geometrical properties such as lat/lon (or x-y).
+
+
+---
+class: left, top
+
+## I use sp. Why do you bother me with sf?
+
+Because Thierry says so :-)
+
+![:scale 120%]({{ site.baseurl}}/assets/images/20230627/20230627_mail_Thierry.png)
+
+---
+class: left, top
+
+## I use sp. Why do you bother me with sf?
+
+[sp](https://edzer.github.io/sp) is getting old: some of its core dependencies are getting archived as obsolete.
+
+![:scale 100%]({{ site.baseurl}}/assets/images/20230627/20230627_sp_retirement.png)
+
+sf is the present and the future, bro!
+
+This [sp-sf migration table](https://github.com/r-spatial/sf/wiki/Migrating) will help you refactoring your code.
+
+---
+class: left, top
+
+Install the package:
+
+```r
+install.packages("sf")
+```
+
+Load the package:
+
+```r
+library(sf)
+```
+
+---
+class: left, top
+
+# Introduction: sf package
+
+![:scale 100%]({{ site.baseurl}}/assets/images/20230627/20230627_sf_object.png)
+
+
+---
+class: left, top
+
+# Spatial coordinates
+
+Two types of spatial coordinates:
+
+- **projected** (or Cartesian) coordinates: refer to points on a flat space. The coordinates are the distance along the x and y axis
+- **unprojected** or **geographic** coordinates: refer to angles (latitude, longitude) pointing to locations on a sphere (or ellipsoid)
+
+For the math lovers: the flat space is also referred to as R<sup>2</sup>, the sphere as S<sup>2</sup>.
+
+No geospatial data without specifying the **Coordinate Reference System** (CRS) you work with!
+
+And what is a projection? A way to visualize a surface of a sphere on a flat space.
+
+---
+class: left, top
+
+# Projections
+
+A lot of projections exist. Each one has its own purpose. Check this [projection reference](http://www.radicalcartography.net/?projectionref) page by
+Bill Rankin, 2006 containing "(almost) all the projections available in ArcGIS".
+
+Example: [Lambert Azimuthal Equal Area](https://en.wikipedia.org/wiki/Lambert_azimuthal_equal-area_projection), used by European Environment Agency (EEA) to provide standard grids of Europe. Parameters: latitude of origin 52° N, longitude of origin 10° E
+
+![:scale 100%]({{ site.baseurl}}/assets/images/20230627/20230627_Lambert_Azimuthal_Equal_Area.png)
+
+---
+class: center, top
+
+# Projections: it can get crazy!
+
+What your favorite [map projection](https://xkcd.com/977/) say about you
+
+![:scale 20%]({{ site.baseurl}}/assets/images/20230627/20230627_peirce_quincuncial.png)
+
+The Peirce quincuncial projection is the conformal map projection from the sphere to an unfolded square dihedron, developed by Charles Sanders Peirce in 1879. Each octant projects onto an isosceles right triangle, and these are arranged into a square. The name quincuncial refers to this arrangement: the north pole at the center and quarters of the south pole in the corners form a quincunx pattern. [..] Rarely used for geographic purposes. The projection has seen use in digital photography for portraying [spherical panoramas](https://en.wikipedia.org/wiki/Peirce_quincuncial_projection#/media/File:PeircePanorama2007.jpg).
+
+<small> __\* Source__: Wikipedia contributors, "Peirce quincuncial projection," Wikipedia, The Free Encyclopedia, https://en.wikipedia.org/w/index.php?title=Peirce_quincuncial_projection&oldid=1132803635 (accessed June 22, 2023).</small>
+
+---
+class: center, top
+
+![:scale 100%]({{ site.baseurl}}/assets/images/20230627/20230627_sf_cheat_sheet.png)<br>
+
+sf [cheatsheet](https://github.com/inbo/coding-club/blob/master/cheat_sheets/20211026_cheat_sheet_sf.pdf)
+
+See also this very nice [article with some examples](https://r-spatial.github.io/sf/articles/sf2.html) and the excellent book [geocomputation with R](https://geocompr.robinlovelace.net/).
+
+---
+class: left, top
+
+## How to get started?
+
+Check the [Each session setup](https://inbo.github.io/coding-club/gettingstarted.html#each-session-setup) to get started.
+
+## First time coding club?
+
+Check the [First time setup](https://inbo.github.io/coding-club/gettingstarted.html#first-time-setup) section to setup.
+
+---
+class: left, top
+
+![:scale 100%]({{ site.baseurl}}/assets/images/coding_club_sticky_concept.png)
+
+---
+class: center, top
+
+# Share your code during the coding session
+
+<!-- Create a new hackmd file and replace this link (twice!) -->
+Go to https://hackmd.io/WgovTpD4SxuyoFGMvDMeag?edit and start by adding your name in section "Participants".
+
+<iframe src="https://hackmd.io/WgovTpD4SxuyoFGMvDMeag?edit" height="450px" width="800px"></iframe>
+
+
+---
+class: left, top
+
+# Download data and code
+
+You can download the material of today:
+
+- automatically via `inborutils::setup_codingclub_session()`*
+
+- manually** from GitHub folders [coding-club/data/20230627](https://github.com/inbo/coding-club/tree/master/data/20230627) and [coding-club/src/20230627](https://github.com/inbo/coding-club/tree/master/src/20230627)
+
+<br>
+<small> __\* Note__: you can use the date in "YYYYMMDD" format to download the coding club material of a specific day, e.g. run `setup_codingclub_session("20220428")` to download the coding club material of April, 28 2022. If date is omitted, i.e. `setup_codingclub_session()`, the date of today is used. For all options, check the [tutorial online](https://inbo.github.io/tutorials/tutorials/r_setup_codingclub_session/).</small>
+<br>
+<small> __\*\* Note__: check the getting started instructions on [how to download a single file](https://inbo.github.io/coding-club/gettingstarted.html#each-session-setup)</small>
+
+---
+class: left, top
+
+# Data and scripts description
+
+## Data
+
+- `20230627_lepidoptera_iNaturalist_2023.csv`: observations of Lepidoptera taken in 2023 via iNaturalist. Derived from: GBIF.org (22 June 2023) GBIF Occurrence Download https://doi.org/10.15468/dl.4z38cf
+- `20230627_protected_areas.gpkg`: geopackage containing the Natura2000 protected areas located in Flanders
+- `20230627_provinces_be.rds`: R object containing the Belgian provinces
+
+## Scripts
+
+- `20230627_challenges.R`: R script to start with.
+
+---
+background-image: url({{ site.baseurl}}/assets/images/background_challenge_1.png)
+class: left, top
+
+# Challenge 1
+
+Using the cheatsheet and starting from the code provided in `20230627_challenges.R`:
+
+1. Create a geospatial data.frame called `lepidoptera` starting from `lepidoptera_df`. Use the columns `decimalLongitude` and `decimalLatitude`. Note that GBIF data are stored using [WGS 84](https://epsg.io/4326) (CRS = 4326).
+2. Which layers does the  geospatial file `20230627_protected_areas.gpkg` contain?
+3. Import the layer `ps_hbtrl` from `20230627_protected_areas.gpkg`: call it `prot_areas`
+4. How to retrieve information about the Coordinate Reference System (CRS) of `prot_areas`?
+5. Do `prot_areas` and `lepidoptera` have the same CRS?
+6. Read the Belgian provinces rds file as `provinces_be` (the code is given!). What is the class of this variable? From which package does this class come from? How to transform it to a sf object?
+7. Extract the Flemish provinces as `provinces_fl`. Hint: do it as you would do it in a standard data.frame. The motto of the sf package is "Spatial data, simplified" for a reason!
+
+---
+class: left, top
+
+# Intermezzo: CRS & EPSG codes
+
+A common way to specify the CRS is by providing the EPSG (numeric) code. EPSG stands for European Petroleum Survey Group and is an organization that maintains a geodetic parameter database with standard codes, the EPSG codes, for coordinate systems, datums, spheroids, units and such alike.  There are a lot of EPSG codes! Full list: https://spatialreference.org/
+
+![:scale 80%]({{ site.baseurl}}/assets/images/20230627/20230627_epsg_codes.png)
+
+---
+background-image: url({{ site.baseurl}}/assets/images/background_challenge_2.png)
+class: left, top
+
+# Challenge 2
+
+1. Transform both `prot_areas` and `lepidoptera` to the [European Terrestrial Reference System 1989](https://epsg.io/3035) (EPSG: 3035), the coordinate reference system used at EU level. Call the transformed sf objects `prot_areas_3035` and `lepidoptera_3035` respectively
+2. Write the transformed data as a geopackage file called `prot_areas_and_lepidoptera_3035.gpkg` with two layers: the first called `prot_areas`, containing the protected areas, the second layer, `lepidoptera_obs`, containing the observations of lepidoptera
+3. Due to spatial uncertainty (gridded data, GPS uncertainty, etc.) observations
+ should not be idealized as points in space, but as circles. Create such circles
+ using the values stored in column `coordinateUncertaintyInMeters` of
+ `lepidoptera_3035`. Call this sf object `lepidoptera_3035_circles`.
+
+---
+background-image: url({{ site.baseurl}}/assets/images/background_challenge_3.png)
+class: left, top
+
+# Challenge 3
+
+Using data saved in CRS 3035:
+
+1. Which observations in `lepidoptera_3035` (points), are _contained_ in which protected area?
+2. But we should maybe better check which observations, as circles (!), _intersect_ each protected area. How to do it?
+3. So, how many observations as circles intersect the Sonian Forest ("Zoniënwoud")?
+4. Sometimes it's interesting to calculate the centroid of a polygon, e.g. for visualizations. Easy by using sf function `st_centroids()`. However, you get an error while calculating the centroids of `prot_areas`. What does it mean? How to solve the problem?
+5. How to get the portion of protected areas located in province Antwerp?
+6. How to get the _union_ of all the protected areas? How such union is expressed in sf?
+
+---
+class: left, top
+
+# The package of the month. Damiano's choice
+
+I discovered Floris is the maintainer of [qgisprocess](https://r-spatial.github.io/qgisprocess/), a package to provide an R interface to the popular and open source desktop geographic information system (GIS) program [QGIS](https://qgis.org/en/site/). Something I think most of you will find very helpful.
+
+And it has a [cheat sheet](https://r-spatial.github.io/qgisprocess/articles/cheatsheet_en.html) too!
+
+![:scale 100%]({{ site.baseurl}}/assets/images/20230627/20230627_qgisprocess_cheatsheet.png)
+
+Floris wrote also some [slides](https://florisvdh.github.io/foss4g-2023-qgisprocess) presenting the package.
+
+---
+class: left, top
+
+# Bonus challenge
+
+1. How to get the observations, as circles, totally **cover**ed in protected areas? Hint: it could be not present on the cheat sheet
+2. Not a sf question, but still nice to solve: how to add to `prot_areas_3035` a column called `n_lepidoptera_pts` with the number of observations as points in each protected area? To have an idea about the effects of coordinate uncertainty on number of observations, add also the number of observations as circles intersecting protected areas and the ones totally contained as `n_lepidoptera_intersect` and `n_lepidoptera_all_in`
+3. Let's use qgisprocess! To run some models, you would like to create 50 random points in each protected area to simulate some set of observations. How to do it using qgisprocess?
+
+---
+class: left, top
+
+# Announcement
+
+## A Journey through Arrow in R
+
+[ROpenSci](https://ropensci.org/) organizes a community call at 28 June (= tomorrow) at 6pm about the [arrow](https://arrow.apache.org/docs/r/) R package. arrow exposes an interface to the Arrow C++ library, which is one of the libraries implementing the [Apache Arrow](https://arrow.apache.org/) cross-language development platform, extremely useful for in-memory and larger-than-memory data.
+
+Everyone is welcome. No RSVP needed. Check details on [event page](https://ropensci.org/commcalls/jun2023-arrow/).
+
+<center>![:scale 30%]({{ site.baseurl}}/assets/images/20230627/20230627_hex_arrow.png)</center>
+
+---
+class: left, top
+
+# Resources
+
+- [Challenges solutions](https://github.com/inbo/coding-club/blob/main/src/20230627/20230627_challenges_solutions.R) are available
+- Edited video recording available at the INBO coding club vimeo channel: https://vimeo.com/840403950
+- [Geocomputation with R](https://geocompr.robinlovelace.net/)
+- New book of Edzer Pebesma [Spatial Data Science - With Applications in R](https://r-spatial.org/book/)
+- [Spatial Data Science](https://keen-swartz-3146c4.netlify.com/)
+- INBO tutorial on [how to use open vector file formats](https://inbo.github.io/tutorials/tutorials/spatial_standards_vector/) such as geopackage in R
+- [`sf` cheatsheet](https://github.com/inbo/coding-club/blob/master/cheat_sheets/20230627_cheat_sheet_sf.pdf) even if it is far from being the best cheatsheet ever
+- All [articles](https://r-spatial.github.io/sf/articles/sf1.html) on sf package documentation webpage are great material and very well written
+- [qgisprocess](https://r-spatial.github.io/qgisprocess/) package homepage
+- Floris' [slides](https://florisvdh.github.io/foss4g-2023-qgisprocess/#1) presenting qgisprocess package
+- What does your favorite [map projection](https://xkcd.com/977/) say about you? Extremely funny!
+- [arrow](https://arrow.apache.org/docs/r/) R package
+- ROpenSci [event](https://ropensci.org/commcalls/jun2023-arrow/) about arrow on Jun 28
+- Keynote "Spherical geometry" of Edzer Pebesma at the OpenGeoHub summer school 2021: [slides](https://edzer.github.io/spherical_geometry/#1)
+- Keynote "R spatial" of Edzer Pebesma at the useR! 2021 conference: [video](https://www.youtube.com/watch?v=cK08bxUJn5A) and [slides](https://edzer.github.io/UseR2021/#1). Very interesting to learn the principles and basics of spatial data in R
+- everything what Edzer Pebesma says or write, actually
+
+---
+class: left, top
+
+# Summer break
+
+July = summer = no INBO coding club
+
+```r
+library(cowsay)
+cowsay::say(what = "Enjoy the summeR!", by = "egret", what_color = c("red", "orange", "green", "blue", "purple"))
+```
+
+
+.center[![:scale 30%]({{ site.baseurl}}/assets/images/20230627/20230627_summerbreak.png)]
+
+Voting session for the next coding club will be launched soon. Mail will follow.
+
+---
+class: center, middle
+
+![:scale 30%]({{ site.baseurl}}/assets/images/coding_club_logo_1.png)
+
+<!--  Adjust the room and date  -->
+Room: Herman Teirlinck - 01.05 - Isala Van Diest<br>
+Date: __31/08/2023__, van 10:00 tot 12:30<br>
+Subject: still to be voted<br>
+(registration announced via DG_useR@inbo.be)
