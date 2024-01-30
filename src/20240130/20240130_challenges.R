@@ -49,8 +49,9 @@ birds %>%
 # information in this format:
 # background_color+inscription_color+"("+color_ring+")", e.g. RW(FJAC)
 birds <- birds %>%
-  mutate(color_ring_complete = str_glue("{background_color}{inscription_color}",
-                                        "({color_ring})"))
+  mutate(color_ring_complete = str_glue(
+    "{background_color}{inscription_color}({color_ring})"
+    ))
 
 #2. Are the color rings 4-letter only long and is the third letter an "A"?
 # 4 letters long
@@ -79,5 +80,20 @@ birds %>%
   filter(str_equal(str_length(color_ring), 4),
          str_starts(birds$color_ring, ".{2}A"))
 
+
+# Challenge 3A
+#1. The dots in color rings (column color_ring_dots), e.g. KRO.C, KZ.AC, are
+# used for improving readibility. Apart from that, the values in column
+# color_ring_dots should be exactly the same as the ones in column color_ring.
+# Find anomalies.
+
+
+
+#2. Some metal rings (column metal_ring) start with one or more asterisks.
+# Remove them.
+
+
+
+#3. Find color rings (column color_ring) containing two consecutive vowels.
 
 
