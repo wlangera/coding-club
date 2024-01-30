@@ -78,7 +78,18 @@ as.numeric(str_extract(birds$color_ring, "\\d"))
 # the condition in (2).
 birds %>%
   filter(str_equal(str_length(color_ring), 4),
-         str_starts(birds$color_ring, ".{2}A"))
+         str_starts(birds$color_ring, "[a-zA-Z]{2}A"))
+
+### Intermezzo
+example_string <- "I. love. the. 2024(!!) INBO. Coding. Club! Session. of. 30/01/2024...."
+
+# remove all dots
+# does not work
+str_remove_all(example_string, pattern = ".")
+# works
+str_remove_all(example_string, pattern = "\\.")
+str_remove_all(example_string, pattern = fixed("."))
+###
 
 
 # Challenge 3A
