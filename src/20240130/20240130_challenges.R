@@ -98,13 +98,26 @@ str_remove_all(example_string, pattern = fixed("."))
 # color_ring_dots should be exactly the same as the ones in column color_ring.
 # Find anomalies.
 
-
+birds$color_ring == str_remove_all(birds$color_ring_dots, pattern = fixed("."))
 
 #2. Some metal rings (column metal_ring) start with one or more asterisks.
 # Remove them.
-
-
+birds <- birds %>%
+  mutate(metal_ring = str_replace(metal_ring, pattern = "^\\*+",
+                                  replacement = ""))
 
 #3. Find color rings (column color_ring) containing two consecutive vowels.
+# y is sometimes considered a vowel but not always ...
+vowels <- "aeiouAEIOU"
+birds %>%
+  filter(str_detect(color_ring, pattern = paste0("[", vowels, "]{2}")))
 
-
+# Challenge 3B
+# Scientific names sometimes contain abbreviations like "sp.", "spec.",
+# "indet.", "cf", "nov.", "ined". Try to clean the names provided in
+# 20240130_scientificnames.txt by removing such abbreviations.
+# Ensure also that the resulting scientific names have no whitespaces at the
+# start or at the end and also that they have single spaces between words.
+str_remove_all(sc_names, pattern = "[a-zA-Z]*\\.") %>%
+  str_remove(fixed("cf")) %>%
+  str_squish()
