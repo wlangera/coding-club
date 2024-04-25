@@ -156,8 +156,36 @@ media <- read_csv("./data/20240425/20240425_media.csv", na = "")
 # preview data
 glimpse(media)
 
+# 1. How to add the media information stored in media to the observations?
 
 
+
+# 2. How are the columns ordered? Are the columns from observations on the left?
+# Try to put them on the right.
+
+
+
+# 3. Are there media not in observations, i.e. are there media that are not
+# linked to any observation?
+
+
+
+# 4. Some observations have a missing value for column mediaID. Get rid of them
+# while joining.
+
+
+
+# 5. As deploymentID is present in both dataframes, it gets duplicated and the
+# suffixes ".x" and ".y" are added. How to change the suffixes to "_obs" and
+# "_media" while performing exercise 1?
+
+
+
+# 6. How to add the suffix only for the column deploymentID in media?
+
+
+
+# 7. How can you avoid having this column twice?
 
 
 
