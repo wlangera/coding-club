@@ -123,6 +123,21 @@ obs %>%
             last_event_obs = max(.data$eventStart),
             .groups = "drop")
 
+# shorter
+obs %>%
+  # get month and year using lubridate
+  mutate(month = month(.data$eventStart),
+         year = year(.data$eventStart)) %>%
+  # only event-based observations
+  filter(.data$observationLevel == "event") %>%
+  # only if there are 3 or more observations
+  filter(n() >= 3) %>%
+  # get first and last observations per month, year, deploymentID
+  group_by(.data$month, .data$year, .data$deploymentID) %>%
+  summarise(first_event_obs = min(.data$eventStart),
+            last_event_obs = max(.data$eventStart),
+            .groups = "drop")
+
 # 6. How can you return the same dataframe as in exercice 5 but now limiting us
 # to the months with the highest number of event-based observations for each
 # year and deploymentID?
@@ -158,36 +173,43 @@ glimpse(media)
 
 # 1. How to add the media information stored in media to the observations?
 
-
+obs %>%
+  full_join(media, by = join_by("mediaID"))
 
 # 2. How are the columns ordered? Are the columns from observations on the left?
 # Try to put them on the right.
 
-
+media %>%
+  full_join(obs, by = join_by("mediaID"))
 
 # 3. Are there media not in observations, i.e. are there media that are not
 # linked to any observation?
 
-
+media %>%
+  anti_join(obs, by = join_by("mediaID"))
 
 # 4. Some observations have a missing value for column mediaID. Get rid of them
 # while joining.
 
-
+obs %>%
+  right_join(media, by = join_by("mediaID"))
 
 # 5. As deploymentID is present in both dataframes, it gets duplicated and the
 # suffixes ".x" and ".y" are added. How to change the suffixes to "_obs" and
 # "_media" while performing exercise 1?
 
-
+obs %>%
+  full_join(media, by = join_by("mediaID"), suffix = c("_obs", "_media"))
 
 # 6. How to add the suffix only for the column deploymentID in media?
 
-
+obs %>%
+  full_join(media, by = join_by("mediaID"), suffix = c("", "_media"))
 
 # 7. How can you avoid having this column twice?
 
-
+obs %>%
+  full_join(media, by = join_by("mediaID", "deploymentID"))
 
 
 ## BONUS CHALLENGE 1 - dplyr + tidyr = love
