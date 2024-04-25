@@ -64,18 +64,96 @@ obs %>%
 
 
 ## CHALLENGE 2 - Summaries
+# 1. How many observations are there per deploymentID? Show it as a dataframe
+# with two columns: deploymentID and n_obs.
 
+obs %>%
+  count(.data$deploymentID, name = "n_obs")
 
+# 2. How many observations are there per deploymentID and observationLevel?
 
+count_deploy_obslevel <- obs %>%
+  count(.data$deploymentID, .data$observationLevel, name = "n_obs")
+count_deploy_obslevel
 
+# 3. Order the previous output per n_obs (descending order).
 
+count_deploy_obslevel %>%
+  arrange(desc(.data$n_obs))
+
+# 4. Create a summary dataframe with the number of media-based observations
+# (observationLevel = "media"), the number of event-based observations
+# (observationLevel = "event") and the total number of observations per
+# deploymentID. Notice that observationLevel is always filled in. The result
+# should be a dataframe with 4 columns: deploymentID, n_obs_event, n_obs_media
+# and n_obs. Tip: one way to solve this is by combining dplyr with tidyr.
+
+obs %>%
+  # count number of observations per deployment ID
+  count(.data$deploymentID, .data$observationLevel) %>%
+  # set to wide format
+  pivot_wider(id_cols = "deploymentID",
+              names_from = "observationLevel",
+              values_from = "n",
+              names_prefix = "n_obs_") %>%
+  # sum observations across 2 columns
+  rowwise() %>%
+  mutate(n_obs = sum(c_across(c("n_obs_event", "n_obs_media"))))
+
+# 5. For each month, year and deploymentID, return the eventStart of the first
+# and the last event-based observation (observationLevel = event) if there are
+# 3 or more event-based observations. Call these two columns first_event_obs and
+# last_event_obs respectively.
+
+obs %>%
+  # get month and year using lubridate
+  mutate(month = month(.data$eventStart),
+         year = year(.data$eventStart)) %>%
+  # only event-based observations
+  filter(.data$observationLevel == "event") %>%
+  # count number of observations per month, year, deploymentID
+  group_by(.data$month, .data$year, .data$deploymentID) %>%
+  mutate(n_obs = n()) %>%
+  ungroup() %>%
+  # only if there are 3 or more observations
+  filter(.data$n_obs >= 3) %>%
+  # get first and last observations per month, year, deploymentID
+  group_by(.data$month, .data$year, .data$deploymentID) %>%
+  summarise(first_event_obs = min(.data$eventStart),
+            last_event_obs = max(.data$eventStart),
+            .groups = "drop")
+
+# 6. How can you return the same dataframe as in exercice 5 but now limiting us
+# to the months with the highest number of event-based observations for each
+# year and deploymentID?
+
+obs %>%
+  # get month and year using lubridate
+  mutate(month = month(.data$eventStart),
+         year = year(.data$eventStart)) %>%
+  # only event-based observations
+  filter(.data$observationLevel == "event") %>%
+  # count number of observations per month, year, deploymentID
+  group_by(.data$month, .data$year, .data$deploymentID) %>%
+  mutate(n_obs = n()) %>%
+  ungroup() %>%
+  # only if there are 3 or more observations
+  filter(.data$n_obs >= 3) %>%
+  # keep only the months with the highest number of event-based observations
+  group_by(.data$year, .data$deploymentID) %>%
+  slice_max(.data$n_obs) %>%
+  # get first and last observations per month, year, deploymentID
+  group_by(.data$month, .data$year, .data$deploymentID) %>%
+  summarise(first_event_obs = min(.data$eventStart),
+            last_event_obs = max(.data$eventStart),
+            .groups = "drop")
 
 
 ## CHALLENGE 3 - Two-table verbs
-
+# load data
 media <- read_csv("./data/20240425/20240425_media.csv", na = "")
 
-# Preview
+# preview data
 glimpse(media)
 
 
