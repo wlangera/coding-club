@@ -1,0 +1,70 @@
+---
+title: "Craywatch dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+# Load libraries:
+library(tidyverse)      # to do datascience
+library(here)           # to work easily with paths
+library(sf)             # to work with geospatial vector data
+library(leaflet)        # to make dynamic maps
+library(DT)             # to make interactive tables
+library(flexdashboard)  # to make dashboards
+
+
+# Read data
+cray_df <- readr::read_tsv(
+  here::here("data", "20250224", "20250224_craywatch_cleaned.txt"),
+  na = "",
+  guess_max = 10000
+)
+```
+
+### Number of observations
+
+```{r}
+n_obs_per_month_species <-
+  cray_df %>%
+  count(year, month, species) %>%
+  # combine year and month to a single date
+  mutate(date = as_date(paste0(year, "-", month, "-01"))) %>%
+  arrange(date, species) %>%
+  relocate(date, species, n, everything())
+
+ggplot(n_obs_per_month_species,
+       aes(x = date, y = n, fill = species)) +
+  geom_bar(stat = "identity") +
+  # Use inferno colors for the species
+  scale_fill_viridis_d(option = "inferno") +
+  # Add title and labels
+  labs(title = "Number of observations per month and species",
+       x = "", y = "Number of observations") +
+  scale_x_date(breaks = n_obs_per_month_species$date, date_labels = "%b") +
+  theme_minimal()
+```
+
+### Observations of Crayfish species
+
+```{r}
+cray_fl <- sf::st_as_sf(cray_df,
+                        coords = c("decimalLongitude", "decimalLatitude"),
+                        crs = 4326)
+
+# Create a palette that maps species to colors
+pal <- colorFactor("inferno", cray_fl$species)
+leaflet(cray_fl) %>%
+  addTiles() %>%
+  addCircleMarkers(popup = ~paste0(cray_fl$eventDate, ": ", cray_fl$species),
+                   color = pal(cray_fl$species),
+                   stroke = FALSE,
+                   fillOpacity = 0.5,
+                   radius = 4) %>%
+  addLegend(pal = pal, values = ~species,
+            position = "bottomright")
+```
