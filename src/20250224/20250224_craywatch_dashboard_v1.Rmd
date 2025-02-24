@@ -9,9 +9,10 @@ output:
       primary: "#c04384"
       navbar-bg: "#000000"
       base_font: 
-        google: Prompt
+        Cailibri
       heading_font:
-        google: Sen
+        Sans Pro
+    source_code: embed
     orientation: columns
     vertical_layout: fill
 editor_options: 
@@ -36,7 +37,7 @@ cray_df <- readr::read_tsv(
 )
 ```
 
-Crayfish distribution
+Crayfish Distribution
 =====================================  
 
 ### Number of observations
@@ -82,7 +83,7 @@ leaflet(cray_fl) %>%
             position = "bottomright")
 ```
 
-Citizen science {data-orientation=rows}
+Citizen Science Contribution {data-orientation=rows}
 =====================================  
 
 Row
@@ -129,4 +130,11 @@ cray_df %>%
     labs(x = "", y = "Number of observations") +
     theme_minimal() +
     coord_flip()
+```
+
+Data Portal
+=====================================
+
+```{r}
+DT::datatable(cray_df)
 ```
