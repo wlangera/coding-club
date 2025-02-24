@@ -52,3 +52,7 @@ _site/
 # GIFs and videos
 *.mp4
 *.GIF
+
+# Avoid quarto rendered html and all other generated files
+src/20241217/20241217_anemone_quarto_files
+src/20241217/20241217_anemone_quarto.html
