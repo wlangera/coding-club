@@ -2,6 +2,16 @@
 title: "Craywatch dashboard"
 output: 
   flexdashboard::flex_dashboard:
+    theme:
+      version: 4
+      bg: "#ffffff"
+      fg: "#356196" 
+      primary: "#c04384"
+      navbar-bg: "#000000"
+      base_font: 
+        google: Prompt
+      heading_font:
+        google: Sen
     orientation: columns
     vertical_layout: fill
 editor_options: 
