@@ -1,0 +1,451 @@
+---
+layout: presentation
+title: From stand alone functions to R packages
+---
+
+class: center, middle
+
+![:scale 30%]({{ site.baseurl}}/assets/images/coding_club_logo_1.png)
+
+<!-- Do not forget to adapt the presentation title in the header! -->
+
+<!-- Adjust the presentation to the session. Focus on the challenges,
+    this is not a coding tutorial.
+
+    Note, to include figures, store the image in the `/docs/assets/images/yyyymmdd/`
+    folder and use the jekyll base.url reference as done in this template
+    or see https://jekyllrb.com/docs/liquid/tags/#links.
+    using the scale attribute ![:scale 30%](...), you can adjust the image size.
+-->
+
+<!--  Adjust the day, month  -->
+# 29 OCTOBER 2024
+
+## INBO coding club
+
+<!--  Adjust the room number and name  -->
+Herman Teirlinck Building
+
+01.17 - Clara Peeters
+
+---
+class: left, top
+
+# Big news: new website URL
+
+The INBO coding club website has a new, INBO branded URL: [coding-club.inbo.be/](https://coding-club.inbo.be/). The old URL ([inbo.github.io/coding-club/](https://inbo.github.io/coding-club/)) will be redirected to the new one.
+
+Notice that the same change has been made for the INBO tutorials website: [tutorials.inbo.be/](https://tutorials.inbo.be/). The old URL ([inbo.github.io/tutorials/](https://inbo.github.io/tutorials/)) will be redirected to the new one.
+
+---
+class: left, top
+
+# Big news: bye bye Amber
+
+Amber, member of the INBO coding club core team, will leave INBO soon. We will miss her a lot. We wish her all the best in her new job and life in the land of tea and [scones](https://en.wikipedia.org/wiki/Scone). We hope she will continue to be part of the coding club community, even if remotely.
+
+.center[![:scale 45%]({{ site.baseurl}}/assets/images/20241029/20241029_bye_bye_Amber.webp)]
+
+
+<small>Credits: [rawpixel](https://www.rawpixel.com/image/2597076/free-illustration-image-bye-ballon-black), public domain. </small>
+
+---
+class: center, middle
+
+<!-- Create a new badge using Inkscape or other programs based on the assets/images/coding_club_badges.svg file -->
+![:scale 90%]({{ site.baseurl}}/assets/images/20241029/20241029_badge.png)
+
+
+
+---
+class: left, top
+
+# Recap: coding is cooking
+
+- R is your kitchen
+- R console is your food processor.
+- Functions are like recipes: they tell you how to take inputs (ingredients), process them in some way and return an output (food).
+
+---
+class: left, top
+
+# Recap: define the function
+
+- Define the recipe to make bread in the food processor settings
+- Define the function `make_bread()`
+
+```
+make_bread <- function(grains, yeast, water, salt) {
+    # Code to generate `bread`.
+    # The code here can be easy (easy bread recipes do exist)
+    # or quite complex (complex bread recipes do exist too)
+    bread <- grains + yeast + water + salt
+    return(bread)
+}
+```
+
+---
+class: left, top
+
+# Recap: use the function
+
+- When ready, you can add ingredients to the food processor, select your own recipe, press `Play` and you will get the **food**.
+- When ready, you can pass inputs to the function, call your own function, press `Enter` and you will get the **output**.
+
+```
+# Prepare ingredients on the table = Define input values
+g <- 20
+y <- 1
+w <- 2
+s <- 3
+# Add ingredients in the food processor = Pass input values to arguments of the function
+bread <- make_bread(
+  grains = g,
+  yeast = y,
+  water = w,
+  salt = s
+) # Press `Enter`
+bread
+```
+
+---
+class: left, top
+
+# Recap: multiple outputs?
+
+Answer is NO.
+
+- One recipe = one food
+- One function = one output
+
+Still, the output can be a named list containing multiple elements.
+
+---
+class: left, top
+
+# Recap: how to load your stand alone functions?
+
+Separate the functions from the code which calls them. Save the functions in a R file, e.g. `make_meals.R`. This allows you to **SOURCE** this file, e.g. by running `source("make_meals.R")` or just by clicking the "Source" button in RStudio.
+
+
+.center[![:scale 100%]({{ site.baseurl}}/assets/images/20241029/20241029_source_functions.png)]
+
+---
+class: left, top
+
+# Recap: document your functions
+
+- Use the `roxygen2` package to document your functions. This will help future-you to understand what the function does, what the arguments are, what the output is, and how to use the function.
+- You can create a roxygen documentation Skeleton via `Code` -> `Insert Roxygen Skeleton`. You will need this today as well!
+
+.center[![:scale 60%]({{ site.baseurl}}/assets/images/20241029/20241029_insert_skeleton_documentation.png)]
+
+
+---
+class: left, top
+
+# Recap: style your functions
+
+- [INBO Styleguide for R code](https://inbo.github.io/tutorials/tutorials/styleguide_r_code/): the official guide followed by us at INBO.
+- The [tidyverse style guide](https://style.tidyverse.org/documentation.html): a widely used and generic enough guide. All tidyverse packcages follow it.
+- The [B-cubed software development guide](https://docs.b-cubed.eu/dev-guide/) mostly written by our colleague, Pieter. A very good guide covring all different aspects of software development (for both R and Python) also focussed on metadata.
+
+---
+class: center, top
+
+### How to get started?
+
+Check the [Each session setup](https://inbo.github.io/coding-club/gettingstarted.html#each-session-setup) to get started.
+
+### First time coding club?
+
+Check the [First time setup](https://inbo.github.io/coding-club/gettingstarted.html#first-time-setup) section to setup.
+
+---
+class: left, top
+
+.center[![:scale 100%]({{ site.baseurl}}/assets/images/coding_club_sticky_concept.png)]
+
+
+---
+class: center, middle
+
+# Share your code during the coding session
+
+<!-- Create a new hackmd file and replace this link (twice!) -->
+Go to https://hackmd.io/cbAR638FR7CQJmoP7rSgdA?both and start by adding your name in section "Participants".
+
+<iframe src="https://hackmd.io/cbAR638FR7CQJmoP7rSgdA?edit" height="400px" width="800px"></iframe>
+
+---
+class: left, top
+
+# Download code
+
+You can download the material of today (only code):
+
+- automatically via `inborutils::setup_codingclub_session()`*
+
+- manually** from GitHub folder [coding-club/src/20241029](https://github.com/inbo/coding-club/tree/master/src/20241029)
+
+<br>
+<small> __\* Note__: you can use the date in "YYYYMMDD" format to download the coding club material of a specific day, e.g. run `setup_codingclub_session("20201027")` to download the coding club material of October, 27 2020. If date is omitted, the date of today is used. For all options, check the [tutorial online](https://inbo.github.io/tutorials/tutorials/r_setup_codingclub_session/).</small>
+<br>
+<small> __\*\* Note__: check the getting started instructions on [how to download a single file](https://inbo.github.io/coding-club/gettingstarted.html#each-session-setup)</small>
+
+---
+class: left, top
+
+# Packages to install?
+
+Check you have the needed packages already installed.
+
+```
+needed_pkgs <- c("devtools","usethis","roxygen2","testthat", "pkgdown")
+pkgs_to_install <- needed_pkgs[!needed_pkgs %in% rownames(installed.packages())]
+pkgs_to_install
+```
+
+Do you need to install them? Please, do NOT do it in RStudio. Do it in basic R instead.
+
+---
+class: left, top
+
+# From functions to packages
+
+- A package is a collection of (documented) functions.
+- A package is a very good way to organize and share your functions.
+
+If a function is like a recipe, a package is like a well-organised bundle of recipes, a cookbook!
+
+.center[![:scale 50%]({{ site.baseurl}}/assets/images/20241029/20241029_cookbook.jpg)]
+
+<br>
+<small>Credits for the [picture](https://pixabay.com/nl/photos/kookboek-oud-recepten-voorbereiding-982661/): [Petra](https://pixabay.com/nl/users/ptra-359668/) on [pixabay](https://pixabay.com/en/).</small>
+
+
+---
+class: center, middle
+
+.center[![:scale 90%]({{ site.baseurl}}/assets/images/20241029/20241029_package-development_cheatsheet.png)]
+Download cheatsheet [pdf](https://github.com/inbo/coding-club/blob/master/cheat_sheets/20241029_package-development.pdf)* or go to the [HTML version](https://rstudio.github.io/cheatsheets/html/package-development.html).
+
+<br>
+<small><left> \* PDF cheatsheet is available in other 6 languages, e.g. [Dutch](https://rstudio.github.io/cheatsheets/translations/dutch/package-development_nl.pdf) and [Italian](https://rstudio.github.io/cheatsheets/translations/italian/package-development_it.pdf).</left></small>
+
+---
+class: left, top
+
+# Challenge 0 - How to create a R package
+
+Let's start a R package in RStudio!
+
+Go to `File` -> `New Project` -> `New Directory` -> `R package using devtools`
+
+.center[![:scale 80%]({{ site.baseurl}}/assets/images/20241029/20241029_select_project_type.png)]
+
+---
+class: left, top
+
+# Challenge 0 - How to create a R package
+
+In the new pop-up window choose:
+
+- `Directory name`: the name of the package, e.g. `fiRst`
+- `Create project as subdirectory of`: place it where you prefer, e.g. in your `src/20241029/` subdirectory.
+- Yes, select `"Open in new session"`, always a good idea.
+
+.center[![:scale 68%]({{ site.baseurl}}/assets/images/20241029/20241029_create_project.png)]
+
+---
+class: left, top
+
+# Challenge 0 - How to install and share a R package?
+
+Stand alone functions ae _loaded_ by `Source` button (or `source()` command). A package needs to be _installed_ and _loaded_. To do so, you have a pane in RStudio called `Build`.
+
+- Click on the `Build` pane.
+- Click on `Install`: it will install the package, restart R and load the package (run `library(fiRst)`) automatically.
+
+.center[![:scale 50%]({{ site.baseurl}}/assets/images/20241029/20241029_build_install.png)]
+
+The best way for sharing your package is to make a new GitHub repository, but we will not cover that aspect here. However, via devtools  (again!) you can "bundle" your package in a single compressed file (.tar.gz). This is the file you can share with your colleagues :-)
+
+---
+class: left, top
+
+# Challenge 1
+
+1. A (cook)book has more than just a title: it has an author, a short description and important **metadata**, e.g. publisher and IBAN number.
+Every R package has an essential file for this: `DESCRIPTION`. It contains metadata about the package, including the package name, license and authors. Open it and edit it. Set yourself as **aut**hor and **cre**ator. About [license](https://choosealicense.com/), choose the `MIT` license or the  `GPL-3` license.
+2. Installing is one thing. Another important operation is checking your package. It helps you to detect issues with your package. Click on `Check` in the `Build` pane (see screenshot). What do you see?
+3. Typically a cookbook has at least one recipe and packages have at least one function :-) Our package? Not yet! R files `MUST` be placed in the `./R` folder. Place the functions `make_bread()` and `make_focaccia()` provided in `20241029_challenges.R`, "Challenge 1" section, in the `./R` folder. Best practice: one function = one file, and `file_name` = `function_name`.
+4. Try to install your package once again. Can you use your new functions? Probably not. Try to solve the issue. Hint: documentation is more than just a nice-to-have.
+
+.center[![:scale 50%]({{ site.baseurl}}/assets/images/20241029/20241029_check.png)]
+
+---
+class: left, top
+
+# Intermezzo 1 - recap
+
+We learned three important functions of the devtools package. They do a lot of things for you:
+- `devtools::install()` is the command behind the button `Install` in the Build pane to install the package.
+- `devtools::check()` is the command behind the button `Check` in the Build pane to check the package.
+- `devtools::document()` is the command behind Other -> Documentation (Ctrl + Shift + D) to generate the documentation for your functions.
+
+---
+class: left, top
+
+# Intermezzo 1 - usethis
+
+
+You wonder: if I can use devtools commands to install/check/document my package, why is there no command to create a package? Why must I click here and there in RStudio to do so? Well, there is a package for that: `usethis`. It is the "brother" of devtools that automates many tasks. For example, you can create the very same package described in challenge 0 with `usethis::create_package("path/to/package")`!
+
+So, if you are in the console of the coding club project (root folder), and you want to create a package, let's say `secondR` in the `src/20241029/` folder, you can run:
+
+```
+usethis::create_package("src/20241029/secondR")
+```
+
+
+---
+background-image: url({{ site.baseurl}}/assets/images/background_challenge_2.png)
+class: left, top
+
+# Challenge 2
+
+We will create a new package called `bRead`*.
+
+1. Check if this package name is available on CRAN, GitHub, Bioconductor. Important because you do not want to have the same name as another package. Hint: session [Naming your package](https://docs.b-cubed.eu/dev-guide/#r-pkg-naming) from the B-Cubed software dev guide.
+2. Create a `bRead` package (either via RStudio or via usethis).
+3. Add MIT license. While doing this, please add the organisation you belong to as copyright holder, e.g. ÌNBO.
+4. Besides you as author and creator, add one of your neighbours to the authors in `DESCRIPTION` with role **c**on**t**ri**b**utor.
+5. Add a basic `README.md` file**, the welcome sign for users. Hint: `usethis` package helps.
+5. Tell the world how to contribute! Add code of conduct and contributing guidelines. Hint: `usethis` package helps.
+6. Add the functions `make_bread()` and `make_focaccia()` to the package. Make sure they are documented. Install your package and check if the functions work. Hint: copy paste the documented functions, part of the solution of challenge 1.
+
+<small> \* The name `bRead` seems to follow an old-fashioned way of naming a package. See [Naming Things](https://www.njtierney.com/post/2018/06/20/naming-things/). </small>
+<br>
+<small> \*\* Source: B-Cubed guide, chapter ["The README file"](https://docs.b-cubed.eu/dev-guide/#readme). </small>
+
+
+---
+class: left, top
+
+# Intermezzo 2: dependencies
+
+Often your package depends on other packages, i.e. somewhere in your functions you are using functions from other packages.  You can add this dependency in the `DESCRIPTION` file. Example, let's add some assertions in `make_bread()`:
+
+```r
+make_bread <- function(grains, yeast, water, salt) {
+  assertthat::assert_that(assertthat::is.number(grains))
+  assertthat::assert_that(assertthat::is.number(yeast))
+  assertthat::assert_that(assertthat::is.number(water))
+  assertthat::assert_that(assertthat::is.number(salt))
+  bread <- grains + yeast + water + salt
+  return(bread)
+}
+```
+
+How to let R know that your package depends on `assertthat`? Add `assertthat` to the `Imports` field in the `DESCRIPTION` file! You can do it manually, but `usethis` can help you with `usethis::use_package("assertthat")`.
+
+<small> \* The 4 lines with assertions in the code chunk were wrong until Nov 5 2024: `assertthat::is.numeric(grains)` has been corrected using `assertthat::assert_that(assertthat::is.number(grains))`. Same for `water`, `yeast` and `salt`.  </small>
+
+---
+class: left, top
+
+# Intermezzo 2: tests
+
+Tests are important to check if your functions work as expected. Why testing?
+
+- Fewer bugs: you can catch bugs before they become a problem.
+- Better code structure: you need to think about how to test your code, which often leads to better code structure.
+- Call to action: you can write tests for your functions before you write the functions themselves. This is called test-driven development (TDD).
+- Robust code: if you change something in your code, you can run the tests to see if everything still works as expected.
+
+<small>Source: chapter ["Why is formal testing worth the trouble?""](https://r-pkgs.org/testing-basics.html#why-is-formal-testing-worth-the-trouble), from [R Packages (2e)](https://r-pkgs.org/), written by Hadley Wickham and Jennifer Bryan. </small>
+
+---
+class: left, top
+
+# Challenge  3A: tests
+
+Follow the section ["Using testthat in practise"](https://docs.b-cubed.eu/dev-guide/#r-testing-testthat) of the B-Cubed software dev guide to:
+1. Set up the test infrastructure for `bRead` package with `usethis::use_testthat()`.
+2. Add some tests for the functions `make_bread()` and `make_focaccia()`, e.g. they return the expected number given a specific input or they fail if not numeric values are passed as inputs. Hint: see Chapter [Testing](https://r-pkgs.org/tests.html) of the R packages book.
+3. Run the tests with `devtools::test()` or the clik on the Test icon in the Build pane. What do you see?
+
+---
+class: left, top
+
+# Challenge  3B: data and documentation
+
+1. A package has sometimes a dummy dataset to show how the functions work. This dataset is (lazily) loaded when the package is loaded. Add the dummy data.frame `ingredients` provided in `20241029_challenges.R`, section "Challenge 3", to the `bRead` package. Document it as well. Hint: see Chapter [Data](https://r-pkgs.org/data.html), in particular the very first section, 7.1, and 7.1.2.
+2. Documenting is sometimes more than just writing a function documentation. Sometimes you need to add something more complex, e.g. a workflow. This can be done by adding a **vignette**. A vignette is a `.Rmd` file. Create a vignette with title "Bread is the answer" via usethis. You can use `bread_is_the_answer` as filename. Hint: cheatsheet, 2nd page.
+3. Copy paste the content of `20241029_challenges.Rmd` to the vignette. How to **build** the **vignette**? Hint: devtools again!
+
+---
+class: left, top
+
+# Intermezzo 3: metadata and citation
+
+For people working with git and GitHub, the metadata story should go at least some steps further.
+
+1. It is often useful to add a `codemeta.json` file, from the The CodeMeta project. Read more in B-Cubed soft dev guide, section ["Creating metadata for your package"](https://docs.b-cubed.eu/dev-guide/#r-pkg-metadata).
+2. Citations are important. So, a `citation.cff` file is really worth to have. Read more in B-Cubed soft dev guide, section ["Add a CITATION.cff file"](https://docs.b-cubed.eu/dev-guide/#repo-citation-cff). The extension `.cff` stands for "Citation File Format". It is a simple text file format for describing citation information. It is a way to make it easier to cite software.
+
+---
+class: left, top
+
+# Bonus challenge
+
+Create a package called `bRead2` using the [checklist](https://packages.inbo.be/checklist/) package. Hint: https://packages.inbo.be/checklist/articles/getting_started.html. Notice also that the checklist package is git and GitHub minded.
+
+Try also to create a documentation website for your package*. The pkgdown package helps. Hint: cheatsheet, 2nd page.
+
+<small> \* Most of the R packages have a documentation website. For more advanced users: sometimes the generation of the website is automatised via GitHub Actions. In this way you focus only on writing. Everytime you push to the main branch, your website is updated for you. Examples: [inbodb](https://inbo.github.io/inbodb/index.html), [camtrapdp](https://inbo.github.io/camtrapdp/). The GitHub Action is a `.yaml` file in `.github` folder. See the `pkgdown.yaml` of [inbodb](https://github.com/inbo/inbodb/blob/main/.github/workflows/pkgdown.yaml) and [camtrapdp](https://github.com/inbo/camtrapdp/blob/main/.github/workflows/pkgdown.yaml). </small>
+
+
+---
+class: left, top
+
+# Announcement
+
+Do you not have enough about R packages? Great!
+
+On November 7, 1pm-3pm, I will give an online workshop about R packages hosted by GBIF. The workshop is free, but you need to register. More information and registration link [here](https://www.gbif.org/event/gvRWGsyeY9jx5Yrs9bTvi/how-to-package-your-functions-from-standalone-to-r-packages-b-cubed-workshop).
+
+.center[![:scale 70%]({{ site.baseurl}}/assets/images/20241029/20241029_workshop_gbif_b_cubed.png)]
+
+---
+class:left, top
+
+# Resources
+
+- Challenges solutions: the packages [fiRst](https://github.com/inbo/coding-club/blob/main/src/20241029/fiRst_0.0.0.9000.tar.gz) (challenge 1), [bRead](https://github.com/inbo/coding-club/blob/main/src/20241029/bRead_0.0.0.9000.tar.gz) (challenge 2) and [bRead2](https://github.com/inbo/coding-club/blob/main/src/20241029/bRead2_0.0.0.9000.tar.gz) (challenge 3) are available with `.tar.gz` extensions. Just unzip them. The solutions for the bonus challenge will be available soon.
+- Edited video recording is available on [vimeo](https://vimeo.com/1029233461).
+- The main resource for package development: the [R packages (2e)](https://r-pkgs.org/) book.
+- The [B-Cubed software development guide](https://docs.b-cubed.eu/dev-guide/).
+- The [rOpenSci Packages: Development, Maintenance, and Peer Review](https://devguide.ropensci.org/) guide.
+- The [INBO styleguide for R code](https://inbo.github.io/tutorials/tutorials/styleguide_r_code/).
+- Some advices from [tidyverse style guide](https://style.tidyverse.org/documentation.html) can also be useful.
+- Package [Roxygen2](https://roxygen2.r-lib.org/index.html) for easily writing documentation.
+- The [devtools](https://devtools.r-lib.org/index.html) package: THE package for software development in R.
+- The [usethis](https://usethis.r-lib.org/index.html) package: a workflow package, useful for both R packages and projects. The "brother" of usethis.
+- The [testthat](https://testthat.r-lib.org/) package: THE package for testing your package.
+- The [pkgdown](https://pkgdown.r-lib.org/) package: to create beautiful websites out of your package documentation.
+- The [checklist](https://packages.inbo.be/checklist/index.html) package: a set of checks for R projects and R packages, a very nice INBO output (our Thierry!). The "usethis" on steroids :-)
+- Blogpost about naming R packages: [Naming Things](https://www.njtierney.com/post/2018/06/20/naming-things/).
+- For more information about software dedicated licenses, check the [choosealicense.com](https://choosealicense.com/) website.
+
+---
+class: center, middle
+
+![:scale 30%]({{ site.baseurl}}/assets/images/coding_club_logo_1.png)
+
+<!--  Adjust the room and date  -->
+Room: 01.23 - Léon Stynen <br>
+Date: __28/11/2024__, van 10:00 tot 12:30<br>
+Subject: To be decided <br>
+(registration announced via DG_useR@inbo.be)

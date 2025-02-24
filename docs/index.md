@@ -51,7 +51,7 @@ Bringing your own laptop is mandatory, as we will always work together on the co
 
 ### Who organises the coding club?
 
-The current core team members are Hans Van Calster ([@hansvancalster](https://github.com/hansvancalster)), Emma Cartuyvels ([@EmmaCartuyvels1](https://github.com/EmmaCartuyvels1)), Raïsa Carmen ([@RCinbo](https://github.com/RCinbo)), Dirk Maes ([@dirkmaes33](https://github.com/dirkmaes33)), Joost Vanoverbeke ([@joost-vanoverbeke](https://github.com/joost-vanoverbeke)) and Damiano Oldoni ([@damianooldoni](https://github.com/damianooldoni)). The core team is not there to make new course material, but focuses on the practical organisation.
+The current core team members are Raïsa Carmen ([@RCinbo](https://github.com/RCinbo)), Emma Cartuyvels ([@EmmaCartuyvels1](https://github.com/EmmaCartuyvels1)), Oberon Geunens ([@OberonGeunens](https://github.com/OberonGeunens)), Dirk Maes ([@dirkmaes33](https://github.com/dirkmaes33)), Rhea Maesele ([@RheaMaesele](https://github.com/RheaMaesele)) and Damiano Oldoni ([@damianooldoni](https://github.com/damianooldoni)). The core team is not there to make new course material, but focuses on the practical organisation.
 
 More specifically, the core team takes care of:
 
@@ -60,6 +60,16 @@ More specifically, the core team takes care of:
 * general agenda, taking into account the feedback of the participants
 
 Check the [workflow page]({{ site.baseurl }}{% link workflow.md  %}) to see the step-by-step workflow to organize an INBO coding club.
+
+### How to become a member of the INBO Coding Club?
+
+For INBO Employees
+
+If you have an INBO email account, simply reach out to any of the core team members to be added to our internal R mailing list. All Coding Club-related communications will be distributed through this channel.
+
+For External Collaborators
+
+Are you from another organization or university and involved in INBO projects or activities? We'd love to have you join us! Contact us, and we'll add you to our external invitee list to ensure you're informed about all Coding Club events.
 
 ### Did we figure that out ourselves?
 
