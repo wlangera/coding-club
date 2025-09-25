@@ -68,24 +68,67 @@ data_nl$`2433536`$data
 data_nl$`2440946`$data
 
 ## 1.1 ####
-
+names(data_nl) <-  species_df$species
+names(data_nl)
 
 ## 1.2 ####
-
+map(data_nl, function(taxon) {
+  nrow(taxon$data)
+})
 
 ## 1.3 ####
-
+map_int(data_nl, function(taxon) {
+  nrow(taxon$data)
+})
 
 ## 1.4 ####
-
+map(data_nl, function(taxon) {
+  taxon$data
+}) %>%
+  list_rbind() # why not bind_rows?
 
 ## 1.5 ####
 countries <- c("NL", "AT", "ES", "DK")
 
+get_gbif_occurrences <- function(taxon_keys, country_code) {
+  rgbif::occ_search(
+    taxonKey = taxon_keys,
+    country = country_code,
+    year = "1950,2025",
+    hasCoordinate = TRUE,
+    occurrenceStatus = "PRESENT",
+    limit = 100000 # High enough
+  )
+}
+
+data_countries <- map(
+  countries,
+  get_gbif_occurrences,
+  taxon_keys = species_df$taxonKey
+)
+
+data_nl_og <- rgbif::occ_search(
+  taxonKey = species_df$taxonKey,
+  country = "NL",
+  year = "1950,2025",
+  hasCoordinate = TRUE,
+  occurrenceStatus = "PRESENT",
+  limit = 100000 # High enough
+)
+
+waldo::compare(data_countries[[1]], data_nl_og)
 
 ## 1.6 ####
+# The input was not named
+names(data_countries) <- countries
 
+# Also rename second level
+data_countries <- map(data_countries, function(country){
+  names(country) <- species_df$species
+  country
+})
 
+head(data_countries$NL$`Procyon lotor`$data)
 
 # CHALLENGE 2 ####
 
