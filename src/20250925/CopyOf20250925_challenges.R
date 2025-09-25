@@ -184,8 +184,15 @@ map(data_list, function(country) {
 })
 
 ## 2.5 ####
+data_countries_df <- map(data_list, function(country) {
+  map(country, function(taxon) {
+    if (!is.null(taxon$data)) return(taxon$data)
+  })
+}) %>%
+  list_c() %>%
+  list_rbind()
 
-
+head(data_countries_df)
 
 # INTERMEZZO ####
 
