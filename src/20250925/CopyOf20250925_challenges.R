@@ -146,7 +146,28 @@ spec_records
 reduce(spec_records, sum)
 
 ## 2.3 ####
-plot_records <- function(data_list, country, species) {
+plot_records <- function(data, country, species) {
+  if (is.null(data)) return(paste("No data for", species, "in", country))
+  p <- ggplot2::ggplot(data = data) +
+    ggplot2::geom_bar(ggplot2::aes(x = year)) +
+    ggplot2::xlab("Year") +
+    ggplot2::ylab("Number of records") +
+    ggplot2::ggtitle(paste(species, country, sep = " - "))
+
+  return(p)
+}
+
+map(data_list, function(country) {
+  map(country, function(taxon) {
+    data <- taxon$data
+    species <- unique(data$species)
+    country <- unique(data$countryCode)
+    plot_records(data, species, country)
+  })
+})
+
+# Use for loop
+plot_records2 <- function(data_list, country, species) {
   plot_data <- data_list[[country]][[species]]$data
   if (is.null(plot_data)) return(paste("No data for", species, "in", country))
   p <- ggplot2::ggplot(data = plot_data) +
@@ -160,7 +181,7 @@ plot_records <- function(data_list, country, species) {
 
 for (country in names(data_list)) {
   for (species in names(data_list[[country]])) {
-    print(plot_records(data_list, country, species))
+    print(plot_records2(data_list, country, species))
   }
 }
 
