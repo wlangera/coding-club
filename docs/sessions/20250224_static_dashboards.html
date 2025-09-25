@@ -191,17 +191,15 @@ class: left, top
 
 # Challenge 2: gauges, value boxes and multipaging
 
-User interface can be improved by adding gauges and multipaging. Check the [multiple pages](https://pkgs.rstudio.com/flexdashboard/articles/layouts.html#multiple-pages) section in the flexdashboard documentation.
+User interface can be improved by adding gauges and multipaging. Check the [multiple pages](https://pkgs.rstudio.com/flexdashboard/articles/layouts.html#multiple-pages) section in the flexdashboard documentation. Use the code in 20250224_challenges.R under "Challenge 2" to add a first page to the dashboard containing:
 
-Use the code in 20250224_challenges.R under "# Challenge 2" to add a first page to the dashboard containing:
+1. A gauge on top to show in percentage the number of observations linked to craywatch (= obs from waarnemingen.be dataset). In this way, we show how impactful citizen science is for detecting these species. Tip: check the [gauges](https://pkgs.rstudio.com/flexdashboard/articles/using.html#gauges) section in the flexdashboard documentation.
 
-1. A gauge on top to show in percentage the number of observations linked to craywatch (= obs from waarnemingen.be dataset). In this way we show how impactful is citizen science for detecting these species. Tip: check the [gauges](https://pkgs.rstudio.com/flexdashboard/articles/using.html#gauges) section in the flexdashboard documentation.
-
-2. A value box with the absolute number of observations linked to craywatch (waarnemingen.be). Use a camera as `icon`. Tip: check the [value boxes](https://pkgs.rstudio.com/flexdashboard/articles/using.html#value-boxes) section in the flexdashboard documentation. And if you find a way to combine the gauge and the value box next to each other, please, shout it loudly 📢
+2. A value box with the absolute number of observations linked to craywatch (waarnemingen.be). Use a camera as `icon`. Tip: check the [value boxes](https://pkgs.rstudio.com/flexdashboard/articles/using.html#value-boxes) section in the flexdashboard documentation. And if you find a way to combine the gauge and the value box next to each other, please, shout it out loudly 📢
 
 3. At the bottom, a histogram with the number of observations per dataset.
 
-4. Place the dashboard of challenge 1 in a second page. Replace also "Page 1"" and "Page 2" with better titles.
+4. Place the dashboard of challenge 1 in a second page. Replace also "Page 1" and "Page 2" with better titles.
 
 ---
 background-image: url({{ site.baseurl}}/assets/images/background_challenge_3.png)
@@ -209,12 +207,12 @@ class: left, top
 
 # Challenge 3: extras
 
-1. Allow users to check the the source code. Opt for embedding it. Tip: check the [source code](https://pkgs.rstudio.com/flexdashboard/articles/using.html#source-code) section in the flexdashboard documentation..
+1. Allow users to check the source code. Opt to embed it. Tip: check the [source code](https://pkgs.rstudio.com/flexdashboard/articles/using.html#source-code) section in the flexdashboard documentation..
 2. Allow users to explore the data theirselves! Add a third page with a datatable. Tip: check the [datatables](https://pkgs.rstudio.com/flexdashboard/articles/using.html#datatables) section in the flexdashboard documentation.
-3. Set INBO color as primary color. Tip: check the [custome themes](https://pkgs.rstudio.com/flexdashboard/articles/theme.html#custom-themes) section in the flexdashboard documentation.
+3. Set the INBO color as the primary color. Tip: check the [custom themes](https://pkgs.rstudio.com/flexdashboard/articles/theme.html#custom-themes) section in the flexdashboard documentation.
 3. Publish the dashboard on RPubs, an easy web publishing service provided by RStudio.
 
-![:scale 90%]({{ site.baseurl}}/assets/images/20250224/2025_RPubs.png)
+![:scale 70%]({{ site.baseurl}}/assets/images/20250224/20250224_RPubs.png)
 
 ---
 background-image: url({{ site.baseurl}}/assets/images/background_challenge_3.png)
@@ -222,14 +220,14 @@ class: left, top
 
 # Bonus challenge 1
 
-Pubishing via RPubs is nice, but you can also host the dashboard on GitHub Pages. Of course you need to have a GitHub account and make a new repository for the dashboard. Tip: the tutorial ["Deploying flexdashboard on Github Pages"](https://ramikrispin.github.io/2020/09/deploying-flexdashboard-on-github-pages/) of Rami Krispin can help you a lot.
+Publishing via RPubs is nice, but you can also host the dashboard on GitHub Pages. Of course, you need to have a GitHub account and make a new repository for the dashboard. Tip: the tutorial ["Deploying flexdashboard on Github Pages"](https://ramikrispin.github.io/2020/09/deploying-flexdashboard-on-github-pages/) of Rami Krispin can help you a lot.
 
 ---
 class: left, top
 
 ## Intermezzo - flexdashboard limitations and its future: Quarto
 
-The biggest limitation of flexdashboard? You cannot combine it with Rmarkdown website functionality and flexdashboard, see this [old issue](https://github.com/rstudio/flexdashboard/issues/72).
+The biggest limitation of flexdashboard? You cannot combine Rmarkdown website functionality with flexdashboard, see this [old issue](https://github.com/rstudio/flexdashboard/issues/72).
 
 The reason the issue is still open is that the same company behind flexdashboard was in the meantime developing [Quarto](https://quarto.org/docs/)! Quarto creates dynamic content with not only R, but also [Python](https://quarto.org/docs/computations/python.html), [Julia],(https://quarto.org/docs/computations/julia.html) and [Observable](https://quarto.org/docs/computations/ojs.html). So, you can create R dashboards with Quarto! Check the extensive [Quarto Dashboards](https://quarto.org/docs/dashboards/) guide. The syntax is quite similar to flexdashboard, of course, with the advantage that you can combine dashboards and standard Quarto documents (.qmd extension, not really far from R Markdown syntax) in the same website.
 
@@ -237,22 +235,22 @@ The reason the issue is still open is that the same company behind flexdashboard
 background-image: url({{ site.baseurl}}/assets/images/background_challenge_3.png)
 class: left, top
 
-# Bonus challenge: quarto website embedding the dashboard
+# Bonus challenge 2: quarto website embedding the dashboard
 
 Create a Quarto poject. Its rendered version is a website with the following structure:
 
 - A homepage with a short introduction to the dashboard and the data behind: `index.qmd`.
 - The dashboard with its three pages as created at the end of Challenge 3: how many quarto files do you need? One per page or one for all pages as in flexdashboard?
-- A page "About the Data" where you show how to get from the raw occurrences (20250224_craywatch_raw.txt) to the cleaned dataset: `about_the_data.qmd`. You can eventually save the cleaned data at the end of this document. So, the dashboard just needs to read it as we did in the challenges.
+- A page "About the Data" where you show how to get from the raw occurrences (`20250224_craywatch_raw.txt`) to the cleaned dataset: `about_the_data.qmd`. You can eventually save the cleaned data at the end of this document. So, the dashboard just needs to read it as we did in the challenges.
 
-No worries: you don't have to do all this alone. Get inspired by this example: [euroraccoon repository](https://github.com/b-cubed-eu/euroraccoon) and its rendered [website](https://b-cubed-eu.github.io/euroraccoon/). Notice that in the example the dashboard just shows the plots as pngs (saved in About the Data page): no real R code is run. Still, saving the output of "About the Data" to use it as input for the dashboard is still valid.  Quarto documentation is source a very good reference as well.
+No worries: you don't have to do all this alone. Get inspired by this example: [euroraccoon repository](https://github.com/b-cubed-eu/euroraccoon) and its rendered [website](https://b-cubed-eu.github.io/euroraccoon/). Notice that in the example the dashboard just shows the plots as pngs (saved in About the Data page): no real R code is run. Still, saving the output of "About the Data" to use it as input for the dashboard is still valid.  Quarto documentation is a very good reference as well.
 
 ---
 class: left, top
 
-# Packge/Software of the month: Quarto + Observable JS
+# Package/Software of the month: Quarto + Observable JS
 
-Unfortunately, R is not the best programming language to create interactive dashboards, simply because R has not be thought to be used for web development. That's why you need [Shiny](https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/). But hosting Shiny apps is not free unless you create small dashboards for yourself or very few people. Do you want to do some serious web development? Learn Java Script. Or...
+Unfortunately, R is not the best programming language to create interactive dashboards, simply because R was not originally meant to be used for web development. That's why you need [Shiny](https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/). But hosting Shiny apps is not free, unless you create small dashboards for yourself or very few people. Do you want to do some serious web development? Learn Java Script. Or...
 
 Do you know that you can create interactive Shiny-like dashboards with Quarto + Observable JS?
 
@@ -263,15 +261,30 @@ Do you know that you can create interactive Shiny-like dashboards with Quarto + 
 ---
 class: left, top
 
-# Resources
+# Resources 1
 
-- Solutions and video recording will be soon available online.
+- Edited video recording of the session is on [vimeo](https://vimeo.com/1064250550). Do you know that all INBO coding club video recordings are available on our official [INBO coding club vimeo folder](https://vimeo.com/user/8605285/folder/1978815?isPrivate=false)?
+- Solution Challenge 1: [source code](https://github.com/inbo/coding-club/blob/main/src/20250224/20250224_craywatch_dashboard_v1.Rmd) and resulting [dashboard](https://github.com/inbo/coding-club/blob/main/src/20250224/20250224_craywatch_dashboard_v1.html)*.
+- Solution Challenge 2: [source code](https://github.com/inbo/coding-club/blob/main/src/20250224/20250224_craywatch_dashboard_v2.Rmd) and resulting [dashboard](https://github.com/inbo/coding-club/blob/main/src/20250224/20250224_craywatch_dashboard_v2.html)*.
+- Solution Challenge 3: [source code](https://github.com/inbo/coding-club/blob/main/src/20250224/20250224_craywatch_dashboard_v3.Rmd) and resulting [dashboard](https://github.com/inbo/coding-club/blob/main/src/20250224/20250224_craywatch_dashboard_v3.html)*. Check also the [published dashboard](https://rpubs.com/damianooldoni/challenge3_solution_20250224) on Rpubs.
+- Bonus challenge 1: see the GitHub repository [`dashboard_github_pages`](https://github.com/damianooldoni/dashboard_github_pages) and corresponding [website/dashboard](https://damianooldoni.github.io/dashboard_github_pages/).
+- Bonus challenge 2: see GitHub repository [`qmd_dashboard`](https://github.com/damianooldoni/qmd_dashboard) and corresponding [website](https://damianooldoni.github.io/qmd_dashboard/) with embedded dashboard.
+
+<small> __\* Note__: Click on "Download raw file" button on the right (see screenshot) to get the html file. Then open it with a web browser.
+![:scale 30%]({{ site.baseurl}}/assets/images/20250224/20250224_download_raw_file_button.png)
+
+---
+class: left, top
+
+# Resources 2
+
 - [flexdashboard](https://pkgs.rstudio.com/flexdashboard/index.html) package documentation.
 - Example of flexdashboard custom themes and sizing of Pieter: https://pietrh.github.io/flexdashboard-fonts-demo/#big-plot-with-two-tables
 - Example of website embedding a dashboard: [euroraccoon GitHub repository](https://github.com/b-cubed-eu/euroraccoon) and its rendered [website](https://b-cubed-eu.github.io/euroraccoon/).
 - [Quarto Dashboards](https://quarto.org/docs/dashboards/) guide
 - [Observable JS](https://observablehq.com/) homepage.
 - Quarto documentation about [Observable JS](https://quarto.org/docs/interactive/ojs/).
+- [Palmer Penguins example](https://quarto.org/docs/interactive/ojs/examples/penguins.html) about using Observable JS and Quarto.
 - craywatch project: [craywatch.inbo.be](https://craywatch.inbo.be/)
 
 ---
