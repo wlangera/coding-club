@@ -133,23 +133,55 @@ head(data_countries$NL$`Procyon lotor`$data)
 # CHALLENGE 2 ####
 
 ## 2.1 ####
-
+spec_records <- map(data_countries, function(country){
+  map_vec(country, function(taxon) {
+    data <- taxon$data
+    if (is.null(data)) return(0)
+    nrow(data)
+  })
+})
+spec_records
 
 ## 2.2 ####
-
+reduce(spec_records, sum)
 
 ## 2.3 ####
-ggplot2::ggplot(
-  data = data_countries$NL$`Procyon lotor`$data
-) +
-  ggplot2::geom_bar(ggplot2::aes(x = year)) +
-  ggplot2::xlab("Year") +
-  ggplot2::ylab("Number of records") +
-  ggplot2::ggtitle("Procyon lotor - NL")
+plot_records <- function(data_list, country, species) {
+  plot_data <- data_list[[country]][[species]]$data
+  if (is.null(plot_data)) return(paste("No data for", species, "in", country))
+  p <- ggplot2::ggplot(data = plot_data) +
+    ggplot2::geom_bar(ggplot2::aes(x = year)) +
+    ggplot2::xlab("Year") +
+    ggplot2::ylab("Number of records") +
+    ggplot2::ggtitle(paste(species, country, sep = " - "))
 
+  return(p)
+}
+
+for (country in names(data_list)) {
+  for (species in names(data_list[[country]])) {
+    print(plot_records(data_list, country, species))
+  }
+}
 
 ## 2.4 ####
+data_path <- file.path("src", "20250925")
+map(data_list, function(country) {
+  map(country, function(taxon) {
+    data <- taxon$data
+    if (!is.null(data)) {
+      key <- unique(data$speciesKey)
+      species <- unique(data$species)
+      country <- unique(data$countryCode)
+      file_name <- paste0(
+        "20250925_gbif_", key, "_", species, "_", country, ".csv"
+      )
 
+      paste0("Writing '", file_name, "'.")
+      write_csv(data, file.path(data_path, file_name))
+    }
+  })
+})
 
 ## 2.5 ####
 
