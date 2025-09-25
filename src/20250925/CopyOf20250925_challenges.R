@@ -1,6 +1,51 @@
 library(tidyverse)
 library(rgbif)
 
+# CHALLENGE 0 ####
+
+# 1. You do not always need map()
+height_giraffe <- runif(n = 5, min = 4.3, max = 5.7)
+floor(height_giraffe)
+
+# 2. But you do sometimes
+# height of 5 giraffes
+height_giraffe <- runif(n = 5, min = 4.3, max = 5.7)
+# weight of 5 giraffes
+weight_giraffe <- rnorm(n = 5, mean = 1192, sd = 300)
+# data.frame with height and weight
+df_giraffe <- tibble(height = height_giraffe,
+                     weight = weight_giraffe)
+
+colMeans(df_giraffe)
+map(df_giraffe, mean)
+map(df_giraffe, median)
+
+# 3. More difficult example
+# Height of 5 giraffes
+height_giraffe <- runif(n = 6, min = 4.3, max = 5.7)
+# Weight of 5 giraffes
+weight_giraffe <- rnorm(n = 6, mean = 1192, sd = 300)
+# GPS tracker ID
+gps_tracker_giraffe <- c("B0G", "TRT", "4FB", "U7H", "31L", "O9Q")
+# Giraffes nicknames
+nicknames_giraffe <- sample(
+  c("Oberon", "Raïsa", "Dirk", "Emma", "Damiano", "Rhea")
+)
+# List with weight, height and GPS tracker IDs. Use nicknames as list element names.
+giraffes <- tibble::tibble("weight" = weight_giraffe,
+                           "height" = height_giraffe,
+                           "gpsID" = gps_tracker_giraffe) %>%
+  transpose %>%
+  set_names(nicknames_giraffe)
+giraffes
+
+bmi <- function(weight, height) weight / height^2
+
+map(giraffes, function(giraffe) {
+  bmi(giraffe$weight, giraffe$height)
+})
+
+
 # CHALLENGE 1 ####
 
 species_df <- dplyr::tibble(
