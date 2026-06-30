@@ -92,5 +92,70 @@ match6 <- "https://api.gbif.org/v1/occurrence/download/0073188-260519110011954"
 req6 <- request("https://api.gbif.org/v1/occurrence/download/0073188-260519110011954")
 req6$url == match6
 
+## Challenge 2
+# The Royal Meteorological Institute (KMI) share a lot of data openly via WFS.
 
+#1. Get the available AWS stations (aws:aws_station).
+req_aws <- request("https://opendata.meteo.be/service/ows") %>%
+  req_url_query(
+    service = "wfs",
+    version = "2.0.0",
+    request = "getFeature",
+    typenames = "aws_station",
+    outputformat = "json"
+  )
 
+# Get result
+result_aws <- sf::st_read(req_aws$url)
+mapview::mapview(result_aws)
+
+#2. Same data, but this time try to save it on disk as a CSV file directly.
+data_path <- "./data/20260630"
+dir.create(data_path, recursive = TRUE, showWarnings = FALSE)
+
+req_aws2 <- request("https://opendata.meteo.be/service/ows") %>%
+  req_url_query(
+    service = "wfs",
+    version = "2.0.0",
+    request = "getFeature",
+    typenames = "aws_station",
+    outputformat = "csv"
+  )
+
+req_perform(req_aws2, path = file.path(data_path, "aws_stations.csv"))
+
+#3. Get daily meteorological data from the station ZEEBRUGGE from 2026-01-01 and save it directly to disk as CSV file.
+zeebrugge_code <- result_aws %>%
+  filter(tolower(name) == "zeebrugge") %>%
+  pull(code)
+
+req_zeebrugge <- request("https://opendata.meteo.be/service/ows") %>%
+  req_url_query(
+    service = "wfs",
+    version = "2.0.0",
+    request = "getFeature",
+    typenames = "synop_data",
+    # kan mooier ...:
+    CQL_FILTER = paste0("code=", zeebrugge_code,
+                        " AND timestamp during 2026-01-01T00:00:00Z/P1D"),
+    outputformat = "csv"
+  )
+
+req_perform(req_zeebrugge, path = file.path(data_path, "data_zeebrugge.csv"))
+
+#4. Get hourly meteorological data from the station of Diepenbeek from 2026-01-15 for a duration of 8 days.
+# Get the data as CSV without saving it to disk.
+req_diepenbeek <- request("https://opendata.meteo.be/service/ows") %>%
+  req_url_query(
+    service = "wfs",
+    version = "2.0.0",
+    request = "getFeature",
+    typenames = "synop_data",
+    CQL_FILTER = "code=6418 AND timestamp during 2026-01-15T00:00:00Z/P8D",
+    outputformat = "csv"
+  )
+
+result_diepenbeek <- req_perform(req_diepenbeek) %>%
+  resp_body_raw() %>%
+  read_csv()
+head(result_diepenbeek)
